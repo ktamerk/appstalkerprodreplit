@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appstalker - Mobil Ekranlar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+        
+        .screens-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .phone-mockup {
+            background: white;
+            border-radius: 40px;
+            padding: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background: white;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+        
+        .phone-mockup::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 5px;
+            background: #333;
+            border-radius: 3px;
+            z-index: 11;
+        }
+        
+        .screen-content {
+            background: #f5f5f5;
+            border-radius: 30px;
+            overflow: hidden;
+            min-height: 650px;
+        }
+        
+        .screen-header {
+            background: #007AFF;
+            color: white;
+            padding: 50px 20px 20px;
+            text-align: center;
+        }
+        
+        .screen-header h2 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .screen-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .screen-body {
+            padding: 20px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-list li::before {
+            content: '✓';
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #28a745;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .input-demo {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .button-demo {
+            background: #007AFF;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .user-card {
+            display: flex;
+            align-items: center;
+        }
+        
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            margin-right: 15px;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .user-handle {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .app-item {
+            display: flex;
+            align-items: center;
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .app-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+        
+        .app-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .app-package {
+            color: #999;
+            font-size: 12px;
+        }
+        
+        .profile-header {
+            background: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 32px;
+            margin: 0 auto 15px;
+        }
+        
+        .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .profile-bio {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 15px 0;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .notification-item {
+            display: flex;
+            align-items: center;
+            background: #f0f8ff;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .notif-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+        
+        .notif-text {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .notif-time {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 20px 0 15px;
+        }
+        
+        .tab-bar {
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid #eee;
+            margin-top: auto;
+        }
+        
+        .tab-item {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+        }
+        
+        .tab-item.active {
+            color: #007AFF;
+        }
+        
+        .search-box {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 Appstalker Mobil Ekranlar</h1>
+            <p>React Native ile geliştirilmiş iOS ve Android uygulaması</p>
+        </div>
+        
+        <div class="screens-grid">
+            <!-- Login Screen -->
+            <div class="phone-mockup">
+                <div class="screen-content">
+                    <div class="screen-header">
+                        <h2>Giriş Yap</h2>
+                        <p>Hesabınıza giriş yapın</p>
+                    </div>
+                    <div class="screen-body">
+                        <div style="padding: 20px;">
+                            <div style="text-align: center; margin-bottom: 30px;">
+                                <div style="font-size: 48px; margin-bottom: 10px;">📱</div>
+                                <h3 style="font-size: 28px; color: #333; margin-bottom: 5px;">Appstalker</h3>
+                                <p style="color: #666; font-size: 14px;">Uygulamalarınızı dünya ile paylaşın</p>
+                            </div>
+                            
+                            <div class="input-demo">Email</div>
+                            <div class="input-demo">Şifre</div>
+                            <button class="button-demo">Giriş Yap</button>
+                            <p style="text-align: center; color: #007AFF; font-size: 14px; margin-top: 20px;">
+                                Hesabınız yok mu? Kayıt Olun
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Register Screen -->
+            <div class="phone-mockup">
+                <div class="screen-content">
+                    <div class="screen-header">
+                        <h2>Kayıt Ol</h2>
+                        <p>Yeni hesap oluşturun</p>
+                    </div>
+                    <div class="screen-body">
+                        <div style="padding: 20px;">
+                            <h3 style="text-align: center; font-size: 24px; color: #333; margin-bottom: 30px;">
+                                Hesap Oluştur
+                            </h3>
+                            
+                            <div class="input-demo">Email</div>
+                            <div class="input-demo">Kullanıcı Adı</div>
+                            <div class="input-demo">Görünen İsim</div>
+                            <div class="input-demo">Şifre</div>
+                            <button class="button-demo">Kayıt Ol</button>
+                            <p style="text-align: center; color: #007AFF; font-size: 14px; margin-top: 20px;">
+                                Zaten hesabınız var mı? Giriş Yapın
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Feed Screen -->
+            <div class="phone-mockup">
+                <div class="screen-content">
+                    <div class="screen-header">
+                        <h2>Ana Sayfa</h2>
+                        <p>Takip ettikleriniz</p>
+                    </div>
+                    <div class="screen-body">
+                        <div class="user-card card">
+                            <div class="avatar">E</div>
+                            <div class="user-info">
+                                <div class="user-name">Elon Musk</div>
+                                <div class="user-handle">@elonmusk</div>
+                            </div>
+                        </div>
+                        
+                        <div class="user-card card">
+                            <div class="avatar">J</div>
+                            <div class="user-info">
+                                <div class="user-name">Jeff Bezos</div>
+                                <div class="user-handle">@jeffbezos</div>
+                            </div>
+                        </div>
+                        
+                        <div class="user-card card">
+                            <div class="avatar">M</div>
+                            <div class="user-info">
+                                <div class="user-name">Mark Zuckerberg</div>
+                                <div class="user-handle">@zuck</div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 20px; color: #666;">
+                            <p>Daha fazla kişi takip edin!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Screen -->
+            <div class="phone-mockup">
+                <div class="screen-content">
+                    <div class="screen-header" style="padding: 30px 20px 0;">
+                        <h2>Profil</h2>
+                    </div>
+                    <div class="profile-header">
+                        <div class="profile-avatar">A</div>
+                        <div class="profile-name">Ahmet Yılmaz</div>
+                        <div class="profile-bio">Teknoloji meraklısı 📱 iOS Developer</div>
+                        
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-value">1.2K</div>
+                                <div class="stat-label">Takipçi</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">342</div>
+                                <div class="stat-label">Takip</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">87</div>
+                                <div class="stat-label">Uygulama</div>
+                            </div>
+                        </div>
+                        
+                        <button class="button-demo" style="max-width: 200px; margin: 10px auto;">
+                            Profili Düzenle
+                        </button>
+                    </div>
+                    
+                    <div class="screen-body">
+                        <div class="section-title">Yüklü Uygulamalar</div>
+                        
+                        <div class="app-item">
+                            <div class="app-icon">W</div>
+                            <div>
+                                <div class="app-name">WhatsApp</div>
+                                <div class="app-package">com.whatsapp</div>
+                            </div>
+                        </div>
+                        
+                        <div class="app-item">
+                            <div class="app-icon">I</div>
+                            <div>
+                                <div class="app-name">Instagram</div>
+                                <div class="app-package">com.instagram.android</div>
+                            </div>
+                        </div>
+                        
+                        <div class="app-item">
+                            <div class="app-icon">T</div>
+                            <div>
+                                <div class="app-name">Twitter</div>
+                                <div class="app-package">com.twitter.android</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Search Screen -->
+            <div class="phone-mockup">
+                <div class="screen-content">
+                    <div class="screen-header">
+                        <h2>Keşfet</h2>
+                        <p>Kullanıcı arayın</p>
+                    </div>
+                    <div class="screen-body">
+                        <div class="search-box">
+                            🔍 Kullanıcı ara...
+                        </div>
+                        
+                        <div class="user-card card">
+                            <div class="avatar">S</div>
+                            <div class="user-info">
+                                <div class="user-name">Steve Jobs</div>
+                                <div class="user-handle">@stevejobs</div>
+                                <div style="font-size: 12px; color: #999; margin-top: 4px;">
+                                    Think Different 🍎
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="user-card card">
+                            <div class="avatar">B</div>
+                            <div class="user-info">
+                                <div class="user-name">Bill Gates</div>
+                                <div class="user-handle">@billgates</div>
+                                <div style="font-size: 12px; color: #999; margin-top: 4px;">
+                                    Co-chair of the Bill & Melinda Gates Foundation
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="user-card card">
+                            <div class="avatar">T</div>
+                            <div class="user-info">
+                                <div class="user-name">Tim Cook</div>
+                                <div class="user-handle">@tim_cook</div>
+                                <div style="font-size: 12px; color: #999; margin-top: 4px;">
+                                    CEO of Apple 🍎
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Notifications Screen -->
+            <div class="phone-mockup">
+                <div class="screen-content">
+                    <div class="screen-header">
+                        <h2>Bildirimler</h2>
+                        <p>Son aktiviteler</p>
+                    </div>
+                    <div class="screen-body">
+                        <button style="background: white; border: none; color: #007AFF; padding: 12px; width: 100%; border-radius: 8px; margin-bottom: 15px; font-weight: 600;">
+                            Tümünü Okundu İşaretle
+                        </button>
+                        
+                        <div class="notification-item">
+                            <div class="notif-avatar">E</div>
+                            <div style="flex: 1;">
+                                <div class="notif-text">
+                                    <strong>Elon Musk</strong> seni takip etmeye başladı
+                                </div>
+                                <div class="notif-time">2 saat önce</div>
+                            </div>
+                        </div>
+                        
+                        <div class="notification-item">
+                            <div class="notif-avatar">J</div>
+                            <div style="flex: 1;">
+                                <div class="notif-text">
+                                    <strong>Jeff Bezos</strong> Signal uygulamasını yükledi
+                                </div>
+                                <div class="notif-time">5 saat önce</div>
+                            </div>
+                        </div>
+                        
+                        <div class="notification-item">
+                            <div class="notif-avatar">M</div>
+                            <div style="flex: 1;">
+                                <div class="notif-text">
+                                    <strong>Mark Zuckerberg</strong> profilini beğendi
+                                </div>
+                                <div class="notif-time">1 gün önce</div>
+                            </div>
+                        </div>
+                        
+                        <div class="notification-item">
+                            <div class="notif-avatar">S</div>
+                            <div style="flex: 1;">
+                                <div class="notif-text">
+                                    <strong>Steve Jobs</strong> arkadaşlık isteği gönderdi
+                                </div>
+                                <div class="notif-time">2 gün önce</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Edit Profile Screen -->
+            <div class="phone-mockup">
+                <div class="screen-content">
+                    <div class="screen-header">
+                        <h2>Profil Düzenle</h2>
+                        <p>Bilgilerinizi güncelleyin</p>
+                    </div>
+                    <div class="screen-body">
+                        <div style="padding: 20px;">
+                            <label style="display: block; font-weight: 600; color: #333; margin-bottom: 8px; margin-top: 15px;">
+                                Görünen İsim
+                            </label>
+                            <div class="input-demo">Ahmet Yılmaz</div>
+                            
+                            <label style="display: block; font-weight: 600; color: #333; margin-bottom: 8px; margin-top: 15px;">
+                                Biyografi
+                            </label>
+                            <div class="input-demo" style="min-height: 80px;">
+                                Teknoloji meraklısı 📱 iOS Developer
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee;">
+                                <div>
+                                    <div style="font-weight: 600; color: #333;">Uygulamaları Göster</div>
+                                    <div style="font-size: 12px; color: #666;">Başkalarının görmesine izin ver</div>
+                                </div>
+                                <div style="width: 50px; height: 28px; background: #007AFF; border-radius: 14px; position: relative;">
+                                    <div style="width: 24px; height: 24px; background: white; border-radius: 12px; position: absolute; right: 2px; top: 2px;"></div>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee;">
+                                <div>
+                                    <div style="font-weight: 600; color: #333;">Özel Profil</div>
+                                    <div style="font-size: 12px; color: #666;">Sadece takipçiler görebilir</div>
+                                </div>
+                                <div style="width: 50px; height: 28px; background: #ddd; border-radius: 14px; position: relative;">
+                                    <div style="width: 24px; height: 24px; background: white; border-radius: 12px; position: absolute; left: 2px; top: 2px;"></div>
+                                </div>
+                            </div>
+                            
+                            <button class="button-demo" style="margin-top: 30px;">
+                                Değişiklikleri Kaydet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: white; border-radius: 20px; padding: 40px; margin-top: 40px; text-align: center;">
+            <h2 style="color: #333; margin-bottom: 20px;">📱 Mobil Uygulama Özellikleri</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px; text-align: left;">
+                <div>
+                    <h3 style="color: #007AFF; margin-bottom: 15px;">🔐 Kimlik Doğrulama</h3>
+                    <ul style="list-style: none; padding: 0; color: #666; line-height: 1.8;">
+                        <li>✓ Kullanıcı kaydı</li>
+                        <li>✓ Güvenli giriş</li>
+                        <li>✓ JWT token yönetimi</li>
+                        <li>✓ Oturum kalıcılığı</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 style="color: #007AFF; margin-bottom: 15px;">👤 Profil Yönetimi</h3>
+                    <ul style="list-style: none; padding: 0; color: #666; line-height: 1.8;">
+                        <li>✓ Profil görüntüleme</li>
+                        <li>✓ Profil düzenleme</li>
+                        <li>✓ Gizlilik ayarları</li>
+                        <li>✓ Uygulama listesi</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 style="color: #007AFF; margin-bottom: 15px;">👥 Sosyal Özellikler</h3>
+                    <ul style="list-style: none; padding: 0; color: #666; line-height: 1.8;">
+                        <li>✓ Takip et/Takipten çık</li>
+                        <li>✓ Arkadaşlık istekleri</li>
+                        <li>✓ Profil beğenileri</li>
+                        <li>✓ Kullanıcı arama</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 style="color: #007AFF; margin-bottom: 15px;">🔔 Bildirimler</h3>
+                    <ul style="list-style: none; padding: 0; color: #666; line-height: 1.8;">
+                        <li>✓ Gerçek zamanlı bildirimler</li>
+                        <li>✓ WebSocket entegrasyonu</li>
+                        <li>✓ Yeni uygulama uyarıları</li>
+                        <li>✓ Sosyal etkileşim bildirimleri</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white;">
+                <h3 style="margin-bottom: 15px;">📱 Native Özellikler</h3>
+                <p style="opacity: 0.9; line-height: 1.6;">
+                    React Native ile geliştirilmiş uygulama, <strong>Android'de PackageManager</strong> kullanarak 
+                    yüklü uygulamaları otomatik olarak tarar. iOS'ta kullanıcılar manuel olarak uygulama ekleyebilir 
+                    (App Store kısıtlamaları nedeniyle).
+                </p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px; padding: 20px;">
+            <a href="/" style="color: white; text-decoration: none; background: rgba(255,255,255,0.2); padding: 15px 30px; border-radius: 10px; display: inline-block; font-weight: bold;">
+                ← Ana Sayfaya Dön
+            </a>
+        </div>
+    </div>
+</body>
+</html>
