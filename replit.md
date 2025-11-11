@@ -41,6 +41,9 @@ Appstalker is a cross-platform mobile social networking application that allows 
 - 2025-11-11: Security fixes: privacy controls, WebSocket timeout, SESSION_SECRET warning
 - 2025-11-11: Web demo panel created for API testing
 - 2025-11-11: Architect review completed - MVP PASSED all requirements
+- 2025-11-11: Updated to pastel color scheme (#a8b5ff, #d4a5f5) across all interfaces
+- 2025-11-11: Translated all UI text to English (web demo and mobile screens)
+- 2025-11-11: Added profile photo upload functionality with backend endpoint and avatar display
 
 ## Tech Stack
 - Backend: Node.js, Express, TypeScript, Drizzle ORM, PostgreSQL
