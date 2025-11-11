@@ -1,15 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, RefreshControl } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../services/api';
 import { API_ENDPOINTS } from '../../config/api';
+import { getInstalledApps, syncAppsWithServer } from '../../utils/appScanner';
+import { getAppCache, saveAppCache } from '../../utils/appCache';
+import NewAppPrompt from '../../components/NewAppPrompt';
+
+interface NewApp {
+  packageName: string;
+  appName: string;
+  appIcon?: string;
+  platform: string;
+}
 
 export default function FeedScreen({ navigation }: any) {
   const [following, setFollowing] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [newApps, setNewApps] = useState<NewApp[]>([]);
+  const [showNewAppPrompt, setShowNewAppPrompt] = useState(false);
 
   useEffect(() => {
     loadFeed();
+    checkForNewApps();
   }, []);
 
   const loadFeed = async () => {
@@ -27,6 +41,63 @@ export default function FeedScreen({ navigation }: any) {
   const onRefresh = () => {
     setRefreshing(true);
     loadFeed();
+    checkForNewApps();
+  };
+
+  const checkForNewApps = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('userId');
+      if (!userId) return;
+
+      // Load cached app list
+      const cachedPackageNames = await getAppCache(userId);
+      
+      // Get currently installed apps
+      const installedApps = await getInstalledApps();
+      const currentPackageNames = installedApps.map(app => app.packageName);
+
+      // Detect new apps before sync (client-side detection)
+      const newPackageNames = currentPackageNames.filter(
+        pkg => !cachedPackageNames.includes(pkg)
+      );
+
+      // Sync with server
+      const syncResponse = await syncAppsWithServer(installedApps, api);
+
+      // Show prompt if new apps detected
+      if (syncResponse.newApps && syncResponse.newApps.length > 0) {
+        setNewApps(syncResponse.newApps);
+        setShowNewAppPrompt(true);
+      }
+
+      // Update cache with current state
+      await saveAppCache(userId, currentPackageNames);
+    } catch (error) {
+      console.error('Check new apps error:', error);
+    }
+  };
+
+  const handleNewAppsConfirm = async (selectedPackageNames: string[]) => {
+    try {
+      if (selectedPackageNames.length > 0) {
+        await api.post(API_ENDPOINTS.APPS.VISIBILITY_BULK, {
+          updates: selectedPackageNames.map(packageName => ({
+            packageName,
+            isVisible: true,
+          })),
+        });
+      }
+      
+      setShowNewAppPrompt(false);
+      setNewApps([]);
+    } catch (error) {
+      console.error('Update new apps visibility error:', error);
+    }
+  };
+
+  const handleNewAppsDismiss = () => {
+    setShowNewAppPrompt(false);
+    setNewApps([]);
   };
 
   const renderUser = ({ item }: any) => (
@@ -72,6 +143,13 @@ export default function FeedScreen({ navigation }: any) {
             </TouchableOpacity>
           </View>
         }
+      />
+
+      <NewAppPrompt
+        visible={showNewAppPrompt}
+        apps={newApps}
+        onConfirm={handleNewAppsConfirm}
+        onDismiss={handleNewAppsDismiss}
       />
     </View>
   );

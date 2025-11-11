@@ -41,6 +41,10 @@ export const detectNewApps = (
   currentApps: string[],
   cachedApps: string[]
 ): string[] => {
+  if (cachedApps.length === 0) {
+    // First time, no apps are "new"
+    return [];
+  }
   const cachedSet = new Set(cachedApps);
   return currentApps.filter(packageName => !cachedSet.has(packageName));
 };
