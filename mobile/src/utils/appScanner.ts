@@ -21,12 +21,20 @@ const getAndroidInstalledApps = async (): Promise<InstalledApp[]> => {
   try {
     const apps = await DeviceInfo.getInstalledApplications();
     
-    return apps.map((app: any) => ({
-      packageName: app.packageName || app.bundleId,
-      appName: app.appName || app.displayName || 'Unknown',
-      appIcon: app.icon || undefined,
-      platform: 'android' as const,
-    }));
+    return apps.map((app: any) => {
+      let iconUri = app.icon;
+      
+      if (app.packageName) {
+        iconUri = `android.resource://${app.packageName}/${app.iconResourceId || ''}`;
+      }
+      
+      return {
+        packageName: app.packageName || app.bundleId,
+        appName: app.appName || app.displayName || 'Unknown',
+        appIcon: iconUri || undefined,
+        platform: 'android' as const,
+      };
+    });
   } catch (error) {
     console.error('Error getting Android apps:', error);
     return [];

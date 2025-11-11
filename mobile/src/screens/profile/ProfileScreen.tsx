@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView, Image } from 'react-native';
 import api from '../../services/api';
 import { API_ENDPOINTS } from '../../config/api';
 
@@ -33,9 +33,16 @@ export default function ProfileScreen({ route, navigation }: any) {
 
   const renderApp = ({ item }: any) => (
     <View style={styles.appCard}>
-      <View style={styles.appIcon}>
-        <Text style={styles.appIconText}>{item.appName[0]}</Text>
-      </View>
+      {item.appIcon ? (
+        <Image
+          source={{ uri: item.appIcon }}
+          style={styles.appIconImage}
+        />
+      ) : (
+        <View style={styles.appIcon}>
+          <Text style={styles.appIconText}>{item.appName[0]}</Text>
+        </View>
+      )}
       <View style={styles.appInfo}>
         <Text style={styles.appName}>{item.appName}</Text>
         <Text style={styles.packageName}>{item.packageName}</Text>
@@ -212,6 +219,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#007AFF',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 12,
+  },
+  appIconImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
     marginRight: 12,
   },
   appIconText: {

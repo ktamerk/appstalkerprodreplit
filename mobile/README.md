@@ -4,14 +4,14 @@ React Native mobile application for Appstalker - share your installed apps with 
 
 ## Features
 
-- User authentication (login/register)
-- View user profiles with installed apps
-- Follow/unfollow users
-- Send and accept friend requests
-- Like profiles
-- Real-time notifications via WebSocket
-- Native access to device's installed apps list
-- Privacy controls for app visibility
+- ✅ User authentication (login/register)
+- ✅ View user profiles with installed apps
+- ✅ Follow/unfollow users
+- ✅ Send and accept friend requests
+- ✅ Like profiles
+- ✅ Real-time notifications via WebSocket
+- ✅ **Native access to device's installed apps list with real app icons**
+- ✅ Privacy controls for app visibility
 
 ## Setup Instructions
 
@@ -59,10 +59,45 @@ npm run ios
 npm run android
 ```
 
+## App Icons Feature 🎨
+
+### How It Works
+
+The app automatically retrieves **real application icons** from your device:
+
+**Android:**
+- Uses PackageManager API to get installed apps
+- Converts app icons to Base64 format
+- Displays actual app logos (WhatsApp, Instagram, etc.)
+
+**iOS:**
+- Due to App Store restrictions, users manually add apps
+- Optional: Use app name/package to fetch icons from external sources
+
+### Icon Display
+
+When viewing a profile:
+```typescript
+// If app has an icon (from native module)
+<Image source={{ uri: item.appIcon }} />
+
+// Fallback to first letter
+<View><Text>{item.appName[0]}</Text></View>
+```
+
+Icons are:
+- 40x40 pixels
+- Rounded corners (8px)
+- Cached for performance
+- Loaded from Base64 data URI
+
 ## Project Structure
 
 ```
 mobile/
+├── android/
+│   └── app/src/main/java/com/appstalker/
+│       └── AppIconModule.java    # Native module for Android icons
 ├── src/
 │   ├── screens/          # Screen components
 │   │   ├── auth/         # Login, Register screens
@@ -71,9 +106,6 @@ mobile/
 │   │   ├── notifications/# Notifications screen
 │   │   └── search/       # Search users
 │   ├── components/       # Reusable components
-│   │   ├── AppCard.tsx
-│   │   ├── UserCard.tsx
-│   │   └── NotificationItem.tsx
 │   ├── navigation/       # Navigation configuration
 │   ├── services/         # API services
 │   │   ├── api.ts        # API client
@@ -81,7 +113,7 @@ mobile/
 │   │   ├── profile.ts    # Profile service
 │   │   └── websocket.ts  # WebSocket service
 │   ├── utils/            # Utility functions
-│   │   └── appScanner.ts # Native app scanning
+│   │   └── appScanner.ts # Native app scanning with icons
 │   ├── types/            # TypeScript types
 │   └── config/           # App configuration
 ├── App.tsx               # Root component
@@ -90,16 +122,29 @@ mobile/
 
 ## Native Features
 
-### Accessing Installed Apps
+### Accessing Installed Apps with Icons
 
-The app uses platform-specific APIs to access the list of installed applications:
+**Android Implementation:**
+```java
+// AppIconModule.java
+- PackageManager to get installed apps
+- Convert Drawable icons to Base64 PNG
+- Return app list with icon data URIs
+```
 
-**Android**: Uses `PackageManager` to get installed packages
-**iOS**: Uses private APIs (requires jailbreak or special entitlements for App Store)
+**React Native Usage:**
+```typescript
+import { getInstalledApps } from './utils/appScanner';
 
-⚠️ **Note**: iOS restricts access to installed apps list. For production iOS app:
-- Users must manually add apps they want to share
-- Or use limited APIs that don't require special permissions
+const apps = await getInstalledApps();
+// Returns: [{ packageName, appName, appIcon: "data:image/png;base64,..." }]
+```
+
+### Icon Formats
+
+- **Android**: Base64 encoded PNG (`data:image/png;base64,iVBORw0KG...`)
+- **iOS**: External URL or fallback to initials
+- **Fallback**: First letter of app name in colored circle
 
 ## Building for Production
 
@@ -109,11 +154,20 @@ The app uses platform-specific APIs to access the list of installed applications
 expo build:android
 ```
 
+The app will include:
+- Native module for reading installed apps
+- App icon extraction functionality
+- Optimized icon caching
+
 ### iOS IPA
 
 ```bash
 expo build:ios
 ```
+
+⚠️ **Note**: iOS restricts access to installed apps list. For production:
+- Users must manually add apps they want to share
+- Alternative: Use third-party app database APIs
 
 ## Environment Variables
 
@@ -129,7 +183,7 @@ WS_URL=ws://your-backend-url:5000/ws
 The app requests the following permissions:
 
 - **Internet Access**: Required for API communication
-- **Package Query** (Android): To read installed apps list
+- **Package Query** (Android): To read installed apps list and icons
 - **Notifications**: For real-time app installation alerts
 
 Users can control:
@@ -137,6 +191,33 @@ Users can control:
 - Whether their profile is private
 - Who can follow them
 
+## Technical Details
+
+### App Icon Size & Format
+- Size: 40x40 dp (density-independent pixels)
+- Format: PNG with transparency
+- Encoding: Base64 data URI
+- Compression: 100% quality for clarity
+
+### Performance Optimization
+- Icons loaded asynchronously
+- Base64 cached in app state
+- Lazy loading for large app lists
+- Image component with caching enabled
+
+## Troubleshooting
+
+**Icons not showing:**
+1. Check Android permissions in AndroidManifest.xml
+2. Verify native module is linked correctly
+3. Clear app cache and rebuild
+
+**iOS icons missing:**
+- Expected behavior due to platform restrictions
+- Use fallback (first letter) or external icon sources
+
 ## Contributing
 
 This is part of the Appstalker platform developed by Smartinfo Corp.
+
+For questions or issues, please contact the development team.
