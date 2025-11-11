@@ -29,28 +29,11 @@ router.post('/sync', authenticateToken, async (req: AuthRequest, res) => {
           appName: app.appName,
           appIcon: app.appIcon || null,
           platform: app.platform,
-          isVisible: true,
+          isVisible: false,
         })))
         .returning();
 
-      const followers = await db.select().from(follows).where(eq(follows.followingId, userId));
-
-      for (const app of insertedApps) {
-        for (const follower of followers) {
-          const [notification] = await db.insert(notifications).values({
-            userId: follower.followerId,
-            type: 'new_app',
-            content: `installed ${app.appName}`,
-            relatedUserId: userId,
-            relatedAppId: app.id,
-          }).returning();
-
-          broadcastToUser(follower.followerId, {
-            type: 'notification',
-            data: notification,
-          });
-        }
-      }
+      // Don't notify followers yet - wait until user makes app visible
     }
 
     const currentPackageNames = new Set(apps.map((app: any) => app.packageName));
@@ -69,6 +52,12 @@ router.post('/sync', authenticateToken, async (req: AuthRequest, res) => {
     res.json({
       message: 'Apps synced successfully',
       apps: updatedApps,
+      newApps: newApps.map((app: any) => ({
+        packageName: app.packageName,
+        appName: app.appName,
+        appIcon: app.appIcon,
+        platform: app.platform,
+      })),
       newAppsCount: newApps.length,
       removedAppsCount: removedApps.length,
     });
@@ -107,6 +96,26 @@ router.put('/:appId/visibility', authenticateToken, async (req: AuthRequest, res
       return res.status(404).json({ error: 'App not found' });
     }
 
+    // If app becomes visible, notify followers
+    if (isVisible && !updatedApp.isVisible) {
+      const followers = await db.select().from(follows).where(eq(follows.followingId, userId));
+      
+      for (const follower of followers) {
+        const [notification] = await db.insert(notifications).values({
+          userId: follower.followerId,
+          type: 'new_app',
+          content: `installed ${updatedApp.appName}`,
+          relatedUserId: userId,
+          relatedAppId: updatedApp.id,
+        }).returning();
+
+        broadcastToUser(follower.followerId, {
+          type: 'notification',
+          data: notification,
+        });
+      }
+    }
+
     res.json({
       message: 'App visibility updated',
       app: updatedApp,
@@ -114,6 +123,83 @@ router.put('/:appId/visibility', authenticateToken, async (req: AuthRequest, res
   } catch (error) {
     console.error('Update app visibility error:', error);
     res.status(500).json({ error: 'Failed to update app visibility' });
+  }
+});
+
+router.post('/visibility/bulk', authenticateToken, async (req: AuthRequest, res) => {
+  try {
+    const userId = req.userId!;
+    const { updates } = req.body;
+
+    if (!Array.isArray(updates) || updates.length === 0) {
+      return res.status(400).json({ error: 'Updates must be a non-empty array' });
+    }
+
+    const updatedApps = [];
+    const nowVisibleApps = [];
+
+    for (const update of updates) {
+      const { packageName, isVisible } = update;
+      
+      if (!packageName || typeof isVisible !== 'boolean') {
+        continue;
+      }
+
+      const [app] = await db.select()
+        .from(installedApps)
+        .where(and(
+          eq(installedApps.userId, userId),
+          eq(installedApps.packageName, packageName)
+        ));
+
+      if (app) {
+        const [updatedApp] = await db.update(installedApps)
+          .set({ isVisible })
+          .where(and(
+            eq(installedApps.userId, userId),
+            eq(installedApps.packageName, packageName)
+          ))
+          .returning();
+
+        updatedApps.push(updatedApp);
+
+        // Track newly visible apps for notifications
+        if (isVisible && !app.isVisible) {
+          nowVisibleApps.push(updatedApp);
+        }
+      }
+    }
+
+    // Notify followers about newly visible apps
+    if (nowVisibleApps.length > 0) {
+      const followers = await db.select().from(follows).where(eq(follows.followingId, userId));
+      
+      for (const app of nowVisibleApps) {
+        for (const follower of followers) {
+          const [notification] = await db.insert(notifications).values({
+            userId: follower.followerId,
+            type: 'new_app',
+            content: `installed ${app.appName}`,
+            relatedUserId: userId,
+            relatedAppId: app.id,
+          }).returning();
+
+          broadcastToUser(follower.followerId, {
+            type: 'notification',
+            data: notification,
+          });
+        }
+      }
+    }
+
+    res.json({
+      message: 'Apps visibility updated',
+      updatedCount: updatedApps.length,
+      apps: updatedApps,
+    });
+  } catch (error) {
+    console.error('Bulk update app visibility error:', error);
+    res.status(500).json({ error: 'Failed to update apps visibility' });
   }
 });
 

@@ -11,6 +11,7 @@ import ProfileScreen from './src/screens/profile/ProfileScreen';
 import EditProfileScreen from './src/screens/profile/EditProfileScreen';
 import SearchScreen from './src/screens/search/SearchScreen';
 import NotificationsScreen from './src/screens/notifications/NotificationsScreen';
+import ManageAppsScreen from './src/screens/apps/ManageAppsScreen';
 import { initWebSocket, disconnectWebSocket } from './src/services/websocket';
 
 const Stack = createNativeStackNavigator();
@@ -82,7 +83,8 @@ export default function App() {
               component={MainTabs} 
               options={{ headerShown: false }} 
             />
-            <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+            <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ title: 'Edit Profile' }} />
+            <Stack.Screen name="ManageApps" component={ManageAppsScreen} options={{ title: 'Manage Apps' }} />
           </>
         )}
       </Stack.Navigator>

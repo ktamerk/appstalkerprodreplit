@@ -16,8 +16,10 @@ export const API_ENDPOINTS = {
   },
   APPS: {
     SYNC: '/api/apps/sync',
+    ME: '/api/apps/me',
     MY_APPS: '/api/apps/me',
     VISIBILITY: (appId: string) => `/api/apps/${appId}/visibility`,
+    VISIBILITY_BULK: '/api/apps/visibility/bulk',
   },
   SOCIAL: {
     FOLLOW: (userId: string) => `/api/social/follow/${userId}`,

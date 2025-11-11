@@ -97,12 +97,20 @@ export default function ProfileScreen({ route, navigation }: any) {
         </View>
 
         {!username && (
-          <TouchableOpacity
-            style={styles.editButton}
-            onPress={() => navigation.navigate('EditProfile')}
-          >
-            <Text style={styles.editButtonText}>Edit Profile</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={[styles.editButton, styles.editButtonHalf]}
+              onPress={() => navigation.navigate('EditProfile')}
+            >
+              <Text style={styles.editButtonText}>Edit Profile</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.editButton, styles.editButtonHalf]}
+              onPress={() => navigation.navigate('ManageApps')}
+            >
+              <Text style={styles.editButtonText}>Manage Apps</Text>
+            </TouchableOpacity>
+          </View>
         )}
       </View>
 
@@ -191,12 +199,23 @@ const styles = StyleSheet.create({
     color: '#666',
     marginTop: 4,
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 10,
+    width: '100%',
+    paddingHorizontal: 20,
+  },
   editButton: {
     backgroundColor: '#a8b5ff',
     borderRadius: 8,
     padding: 12,
     paddingHorizontal: 30,
-    marginTop: 10,
+    alignItems: 'center',
+  },
+  editButtonHalf: {
+    flex: 1,
+    paddingHorizontal: 15,
   },
   editButtonText: {
     color: '#fff',
