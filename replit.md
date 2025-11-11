@@ -44,6 +44,12 @@ Appstalker is a cross-platform mobile social networking application that allows 
 - 2025-11-11: Updated to pastel color scheme (#a8b5ff, #d4a5f5) across all interfaces
 - 2025-11-11: Translated all UI text to English (web demo and mobile screens)
 - 2025-11-11: Added profile photo upload functionality with backend endpoint and avatar display
+- 2025-11-11: Implemented app visibility selection feature:
+  - Users can choose which installed apps to show on profile
+  - New app detection prompts user when new apps are installed
+  - ManageAppsScreen for controlling app visibility
+  - AsyncStorage caching for persistent app selections
+  - Bulk visibility updates with follower notifications only for visible apps
 
 ## Tech Stack
 - Backend: Node.js, Express, TypeScript, Drizzle ORM, PostgreSQL
