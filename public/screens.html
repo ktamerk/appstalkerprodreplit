@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appstalker - Mobil Ekranlar</title>
+    <title>Appstalker - Mobile Screens</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #a8b5ff 0%, #d4a5f5 100%);
             padding: 40px 20px;
         }
         
@@ -36,6 +36,13 @@
         .header p {
             font-size: 20px;
             opacity: 0.9;
+        }
+        
+        .screen-header {
+            background: #a8b5ff;
+            color: white;
+            padding: 50px 20px 20px;
+            text-align: center;
         }
         
         .screens-grid {
@@ -87,7 +94,7 @@
         }
         
         .screen-header {
-            background: #007AFF;
+            background: #a8b5ff;
             color: white;
             padding: 50px 20px 20px;
             text-align: center;
@@ -147,7 +154,7 @@
         }
         
         .button-demo {
-            background: #007AFF;
+            background: #a8b5ff;
             color: white;
             border: none;
             border-radius: 12px;
@@ -176,7 +183,7 @@
             width: 50px;
             height: 50px;
             border-radius: 25px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #a8b5ff 0%, #d4a5f5 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -214,7 +221,7 @@
             width: 40px;
             height: 40px;
             border-radius: 10px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #a8b5ff 0%, #d4a5f5 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -244,7 +251,7 @@
             width: 80px;
             height: 80px;
             border-radius: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #a8b5ff 0%, #d4a5f5 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -302,7 +309,7 @@
             width: 40px;
             height: 40px;
             border-radius: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #a8b5ff 0%, #d4a5f5 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -345,7 +352,7 @@
         }
         
         .tab-item.active {
-            color: #007AFF;
+            color: #a8b5ff;
         }
         
         .search-box {
@@ -362,8 +369,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📱 Appstalker Mobil Ekranlar</h1>
-            <p>React Native ile geliştirilmiş iOS ve Android uygulaması</p>
+            <h1>📱 Appstalker Mobile Screens</h1>
+            <p>Built with React Native for iOS and Android</p>
         </div>
         
         <div class="screens-grid">
@@ -371,22 +378,22 @@
             <div class="phone-mockup">
                 <div class="screen-content">
                     <div class="screen-header">
-                        <h2>Giriş Yap</h2>
-                        <p>Hesabınıza giriş yapın</p>
+                        <h2>Login</h2>
+                        <p>Sign in to your account</p>
                     </div>
                     <div class="screen-body">
                         <div style="padding: 20px;">
                             <div style="text-align: center; margin-bottom: 30px;">
                                 <div style="font-size: 48px; margin-bottom: 10px;">📱</div>
                                 <h3 style="font-size: 28px; color: #333; margin-bottom: 5px;">Appstalker</h3>
-                                <p style="color: #666; font-size: 14px;">Uygulamalarınızı dünya ile paylaşın</p>
+                                <p style="color: #666; font-size: 14px;">Share your apps with the world</p>
                             </div>
                             
                             <div class="input-demo">Email</div>
-                            <div class="input-demo">Şifre</div>
-                            <button class="button-demo">Giriş Yap</button>
-                            <p style="text-align: center; color: #007AFF; font-size: 14px; margin-top: 20px;">
-                                Hesabınız yok mu? Kayıt Olun
+                            <div class="input-demo">Password</div>
+                            <button class="button-demo">Login</button>
+                            <p style="text-align: center; color: #a8b5ff; font-size: 14px; margin-top: 20px;">
+                                Don't have an account? Registerun
                             </p>
                         </div>
                     </div>
@@ -397,22 +404,22 @@
             <div class="phone-mockup">
                 <div class="screen-content">
                     <div class="screen-header">
-                        <h2>Kayıt Ol</h2>
-                        <p>Yeni hesap oluşturun</p>
+                        <h2>Register</h2>
+                        <p>Create a new account</p>
                     </div>
                     <div class="screen-body">
                         <div style="padding: 20px;">
                             <h3 style="text-align: center; font-size: 24px; color: #333; margin-bottom: 30px;">
-                                Hesap Oluştur
+                                Create Account
                             </h3>
                             
                             <div class="input-demo">Email</div>
-                            <div class="input-demo">Kullanıcı Adı</div>
-                            <div class="input-demo">Görünen İsim</div>
-                            <div class="input-demo">Şifre</div>
-                            <button class="button-demo">Kayıt Ol</button>
-                            <p style="text-align: center; color: #007AFF; font-size: 14px; margin-top: 20px;">
-                                Zaten hesabınız var mı? Giriş Yapın
+                            <div class="input-demo">Username</div>
+                            <div class="input-demo">Display Name</div>
+                            <div class="input-demo">Password</div>
+                            <button class="button-demo">Register</button>
+                            <p style="text-align: center; color: #a8b5ff; font-size: 14px; margin-top: 20px;">
+                                Already have an account? Loginın
                             </p>
                         </div>
                     </div>
@@ -423,7 +430,7 @@
             <div class="phone-mockup">
                 <div class="screen-content">
                     <div class="screen-header">
-                        <h2>Ana Sayfa</h2>
+                        <h2>Feed</h2>
                         <p>Takip ettikleriniz</p>
                     </div>
                     <div class="screen-body">
@@ -571,11 +578,11 @@
             <div class="phone-mockup">
                 <div class="screen-content">
                     <div class="screen-header">
-                        <h2>Bildirimler</h2>
+                        <h2>Notifications</h2>
                         <p>Son aktiviteler</p>
                     </div>
                     <div class="screen-body">
-                        <button style="background: white; border: none; color: #007AFF; padding: 12px; width: 100%; border-radius: 8px; margin-bottom: 15px; font-weight: 600;">
+                        <button style="background: white; border: none; color: #a8b5ff; padding: 12px; width: 100%; border-radius: 8px; margin-bottom: 15px; font-weight: 600;">
                             Tümünü Okundu İşaretle
                         </button>
                         
@@ -626,13 +633,13 @@
             <div class="phone-mockup">
                 <div class="screen-content">
                     <div class="screen-header">
-                        <h2>Profil Düzenle</h2>
+                        <h2>Edit Profile</h2>
                         <p>Bilgilerinizi güncelleyin</p>
                     </div>
                     <div class="screen-body">
                         <div style="padding: 20px;">
                             <label style="display: block; font-weight: 600; color: #333; margin-bottom: 8px; margin-top: 15px;">
-                                Görünen İsim
+                                Display Name
                             </label>
                             <div class="input-demo">Ahmet Yılmaz</div>
                             
@@ -648,14 +655,14 @@
                                     <div style="font-weight: 600; color: #333;">Uygulamaları Göster</div>
                                     <div style="font-size: 12px; color: #666;">Başkalarının görmesine izin ver</div>
                                 </div>
-                                <div style="width: 50px; height: 28px; background: #007AFF; border-radius: 14px; position: relative;">
+                                <div style="width: 50px; height: 28px; background: #a8b5ff; border-radius: 14px; position: relative;">
                                     <div style="width: 24px; height: 24px; background: white; border-radius: 12px; position: absolute; right: 2px; top: 2px;"></div>
                                 </div>
                             </div>
                             
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee;">
                                 <div>
-                                    <div style="font-weight: 600; color: #333;">Özel Profil</div>
+                                    <div style="font-weight: 600; color: #333;">Private Profile</div>
                                     <div style="font-size: 12px; color: #666;">Sadece takipçiler görebilir</div>
                                 </div>
                                 <div style="width: 50px; height: 28px; background: #ddd; border-radius: 14px; position: relative;">
@@ -677,7 +684,7 @@
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px; text-align: left;">
                 <div>
-                    <h3 style="color: #007AFF; margin-bottom: 15px;">🔐 Kimlik Doğrulama</h3>
+                    <h3 style="color: #a8b5ff; margin-bottom: 15px;">🔐 Kimlik Doğrulama</h3>
                     <ul style="list-style: none; padding: 0; color: #666; line-height: 1.8;">
                         <li>✓ Kullanıcı kaydı</li>
                         <li>✓ Güvenli giriş</li>
@@ -687,27 +694,27 @@
                 </div>
                 
                 <div>
-                    <h3 style="color: #007AFF; margin-bottom: 15px;">👤 Profil Yönetimi</h3>
+                    <h3 style="color: #a8b5ff; margin-bottom: 15px;">👤 Profile Management</h3>
                     <ul style="list-style: none; padding: 0; color: #666; line-height: 1.8;">
-                        <li>✓ Profil görüntüleme</li>
-                        <li>✓ Profil düzenleme</li>
+                        <li>✓ View profiles</li>
+                        <li>✓ Edit profile</li>
                         <li>✓ Gizlilik ayarları</li>
                         <li>✓ Uygulama listesi</li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 style="color: #007AFF; margin-bottom: 15px;">👥 Sosyal Özellikler</h3>
+                    <h3 style="color: #a8b5ff; margin-bottom: 15px;">👥 Sosyal Özellikler</h3>
                     <ul style="list-style: none; padding: 0; color: #666; line-height: 1.8;">
                         <li>✓ Takip et/Takipten çık</li>
                         <li>✓ Arkadaşlık istekleri</li>
-                        <li>✓ Profil beğenileri</li>
+                        <li>✓ Profile likes</li>
                         <li>✓ Kullanıcı arama</li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 style="color: #007AFF; margin-bottom: 15px;">🔔 Bildirimler</h3>
+                    <h3 style="color: #a8b5ff; margin-bottom: 15px;">🔔 Notifications</h3>
                     <ul style="list-style: none; padding: 0; color: #666; line-height: 1.8;">
                         <li>✓ Gerçek zamanlı bildirimler</li>
                         <li>✓ WebSocket entegrasyonu</li>
@@ -717,10 +724,10 @@
                 </div>
             </div>
             
-            <div style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white;">
+            <div style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #a8b5ff 0%, #764ba2 100%); border-radius: 15px; color: white;">
                 <h3 style="margin-bottom: 15px;">📱 Native Özellikler</h3>
                 <p style="opacity: 0.9; line-height: 1.6;">
-                    React Native ile geliştirilmiş uygulama, <strong>Android'de PackageManager</strong> kullanarak 
+                    Built with React Native uygulama, <strong>Android'de PackageManager</strong> kullanarak 
                     yüklü uygulamaları otomatik olarak tarar. iOS'ta kullanıcılar manuel olarak uygulama ekleyebilir 
                     (App Store kısıtlamaları nedeniyle).
                 </p>
@@ -729,7 +736,7 @@
         
         <div style="text-align: center; margin-top: 40px; padding: 20px;">
             <a href="/" style="color: white; text-decoration: none; background: rgba(255,255,255,0.2); padding: 15px 30px; border-radius: 10px; display: inline-block; font-weight: bold;">
-                ← Ana Sayfaya Dön
+                ← Feedya Dön
             </a>
         </div>
     </div>

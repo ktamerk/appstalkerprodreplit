@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#a8b5ff',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 15,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#a8b5ff',
     borderRadius: 8,
     padding: 15,
     paddingHorizontal: 30,

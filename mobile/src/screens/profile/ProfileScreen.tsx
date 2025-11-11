@@ -69,11 +69,15 @@ export default function ProfileScreen({ route, navigation }: any) {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>
-            {profile.displayName[0].toUpperCase()}
-          </Text>
-        </View>
+        {profile.avatarUrl ? (
+          <Image source={{ uri: profile.avatarUrl }} style={styles.avatarImage} />
+        ) : (
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>
+              {profile.displayName[0].toUpperCase()}
+            </Text>
+          </View>
+        )}
         <Text style={styles.displayName}>{profile.displayName}</Text>
         {profile.bio && <Text style={styles.bio}>{profile.bio}</Text>}
         
@@ -140,9 +144,15 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#a8b5ff',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 15,
+  },
+  avatarImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     marginBottom: 15,
   },
   avatarText: {
@@ -182,7 +192,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   editButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#a8b5ff',
     borderRadius: 8,
     padding: 12,
     paddingHorizontal: 30,
@@ -216,7 +226,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 8,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#a8b5ff',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,

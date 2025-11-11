@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#eee',
   },
   markAllText: {
-    color: '#007AFF',
+    color: '#a8b5ff',
     fontSize: 14,
     fontWeight: '600',
   },
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#a8b5ff',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#a8b5ff',
   },
   emptyContainer: {
     padding: 40,

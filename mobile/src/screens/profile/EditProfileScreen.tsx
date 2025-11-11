@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Switch, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Switch, Alert, Image } from 'react-native';
 import api from '../../services/api';
 import { API_ENDPOINTS } from '../../config/api';
 
 export default function EditProfileScreen({ navigation }: any) {
   const [displayName, setDisplayName] = useState('');
   const [bio, setBio] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
   const [showApps, setShowApps] = useState(true);
   const [isPrivate, setIsPrivate] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,11 +21,47 @@ export default function EditProfileScreen({ navigation }: any) {
       const profile = response.data.profile;
       setDisplayName(profile.displayName);
       setBio(profile.bio || '');
+      setAvatarUrl(profile.avatarUrl || '');
       setShowApps(profile.showApps);
       setIsPrivate(profile.isPrivate);
     } catch (error) {
       console.error('Load profile error:', error);
     }
+  };
+
+  const selectPhoto = () => {
+    // MVP: URL input for cross-platform compatibility
+    // Production TODO: Implement expo-image-picker for real photo selection
+    // Install: expo install expo-image-picker
+    // Then use: ImagePicker.launchImageLibraryAsync() and upload to backend
+    Alert.alert(
+      'Change Profile Photo',
+      'For this MVP, enter a photo URL. In production, this will use your camera/gallery.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Use Generated Avatar',
+          onPress: () => {
+            // Generate a pastel avatar based on display name
+            const generatedUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=a8b5ff&color=fff&size=200`;
+            setAvatarUrl(generatedUrl);
+          },
+        },
+        {
+          text: 'Enter Custom URL',
+          onPress: () => {
+            // For custom image URLs
+            const customUrl = prompt('Enter image URL (https://...)') || '';
+            if (customUrl && customUrl.startsWith('http')) {
+              setAvatarUrl(customUrl);
+            }
+          },
+        },
+      ]
+    );
   };
 
   const handleUpdate = async () => {
@@ -33,6 +70,7 @@ export default function EditProfileScreen({ navigation }: any) {
       await api.put(API_ENDPOINTS.PROFILE.UPDATE, {
         displayName,
         bio,
+        avatarUrl,
         showApps,
         isPrivate,
       });
@@ -49,6 +87,17 @@ export default function EditProfileScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.avatarContainer} onPress={selectPhoto}>
+        {avatarUrl ? (
+          <Image source={{ uri: avatarUrl }} style={styles.avatar} />
+        ) : (
+          <View style={styles.avatarPlaceholder}>
+            <Text style={styles.avatarText}>{displayName[0]?.toUpperCase() || '?'}</Text>
+          </View>
+        )}
+        <Text style={styles.changePhotoText}>Change Photo</Text>
+      </TouchableOpacity>
+
       <Text style={styles.label}>Display Name</Text>
       <TextInput
         style={styles.input}
@@ -100,6 +149,34 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
   },
+  avatarContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  avatarPlaceholder: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: '#a8b5ff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatarText: {
+    color: '#fff',
+    fontSize: 40,
+    fontWeight: 'bold',
+  },
+  changePhotoText: {
+    color: '#a8b5ff',
+    fontSize: 16,
+    marginTop: 10,
+    fontWeight: '600',
+  },
   label: {
     fontSize: 16,
     fontWeight: '600',
@@ -135,7 +212,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#a8b5ff',
     borderRadius: 8,
     padding: 15,
     alignItems: 'center',

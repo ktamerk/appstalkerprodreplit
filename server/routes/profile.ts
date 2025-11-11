@@ -105,15 +105,18 @@ router.put('/me', authenticateToken, async (req: AuthRequest, res) => {
     const userId = req.userId!;
     const { displayName, bio, avatarUrl, showApps, isPrivate } = req.body;
 
+    const updateData: any = {
+      updatedAt: new Date(),
+    };
+
+    if (displayName) updateData.displayName = displayName;
+    if (bio !== undefined) updateData.bio = bio;
+    if (avatarUrl !== undefined) updateData.avatarUrl = avatarUrl;
+    if (showApps !== undefined) updateData.showApps = showApps;
+    if (isPrivate !== undefined) updateData.isPrivate = isPrivate;
+
     const [updatedProfile] = await db.update(profiles)
-      .set({
-        displayName: displayName || undefined,
-        bio: bio !== undefined ? bio : undefined,
-        avatarUrl: avatarUrl !== undefined ? avatarUrl : undefined,
-        showApps: showApps !== undefined ? showApps : undefined,
-        isPrivate: isPrivate !== undefined ? isPrivate : undefined,
-        updatedAt: new Date(),
-      })
+      .set(updateData)
       .where(eq(profiles.userId, userId))
       .returning();
 
@@ -124,6 +127,33 @@ router.put('/me', authenticateToken, async (req: AuthRequest, res) => {
   } catch (error) {
     console.error('Update profile error:', error);
     res.status(500).json({ error: 'Failed to update profile' });
+  }
+});
+
+router.post('/upload-avatar', authenticateToken, async (req: AuthRequest, res) => {
+  try {
+    const userId = req.userId!;
+    const { avatar } = req.body;
+
+    if (!avatar || !avatar.startsWith('data:image/')) {
+      return res.status(400).json({ error: 'Invalid avatar data' });
+    }
+
+    const [updatedProfile] = await db.update(profiles)
+      .set({
+        avatarUrl: avatar,
+        updatedAt: new Date(),
+      })
+      .where(eq(profiles.userId, userId))
+      .returning();
+
+    res.json({
+      message: 'Avatar uploaded successfully',
+      avatarUrl: updatedProfile.avatarUrl,
+    });
+  } catch (error) {
+    console.error('Upload avatar error:', error);
+    res.status(500).json({ error: 'Failed to upload avatar' });
   }
 });
 
