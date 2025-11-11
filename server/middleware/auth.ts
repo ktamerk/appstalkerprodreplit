@@ -1,6 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
+if (!process.env.SESSION_SECRET) {
+  console.warn('⚠️  WARNING: SESSION_SECRET not set! Using default (INSECURE). Set SESSION_SECRET environment variable in production.');
+}
+
 const JWT_SECRET = process.env.SESSION_SECRET || 'appstalker-secret-key-change-in-production';
 
 export interface AuthRequest extends Request {

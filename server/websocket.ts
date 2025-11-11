@@ -8,6 +8,14 @@ const clients = new Map<string, Set<WebSocket>>();
 export const setupWebSocket = (wss: WebSocketServer) => {
   wss.on('connection', (ws: WebSocket, req) => {
     let userId: string | null = null;
+    let isAuthenticated = false;
+
+    const authTimeout = setTimeout(() => {
+      if (!isAuthenticated) {
+        ws.send(JSON.stringify({ type: 'error', message: 'Authentication timeout' }));
+        ws.close();
+      }
+    }, 30000);
 
     ws.on('message', (message: string) => {
       try {
@@ -22,6 +30,8 @@ export const setupWebSocket = (wss: WebSocketServer) => {
             }
 
             userId = decoded.userId;
+            isAuthenticated = true;
+            clearTimeout(authTimeout);
 
             if (userId && !clients.has(userId)) {
               clients.set(userId, new Set());
@@ -39,6 +49,7 @@ export const setupWebSocket = (wss: WebSocketServer) => {
     });
 
     ws.on('close', () => {
+      clearTimeout(authTimeout);
       if (userId && clients.has(userId)) {
         clients.get(userId)!.delete(ws);
         if (clients.get(userId)!.size === 0) {

@@ -65,6 +65,10 @@ router.get('/:username', authenticateToken, async (req: AuthRequest, res) => {
       .where(and(eq(follows.followerId, currentUserId), eq(follows.followingId, user.id)))
       .limit(1);
 
+    if (profile.isPrivate && currentUserId !== user.id && !isFollowing) {
+      return res.status(403).json({ error: 'This profile is private' });
+    }
+
     const followersCount = await db.select({ count: sql<number>`count(*)` })
       .from(follows)
       .where(eq(follows.followingId, user.id));
