@@ -43,16 +43,18 @@ export default function ProfileScreen({ route, navigation }: any) {
 
   const renderApp = ({ item }: any) => (
     <View style={styles.appCard}>
-      {item.appIcon ? (
-        <Image
-          source={{ uri: item.appIcon }}
-          style={styles.appIconImage}
-        />
-      ) : (
-        <View style={styles.appIcon}>
-          <Text style={styles.appIconText}>{item.appName[0]}</Text>
-        </View>
-      )}
+      <View style={styles.appIconWrapper}>
+        {item.appIcon ? (
+          <Image
+            source={{ uri: item.appIcon }}
+            style={styles.appIconImage}
+          />
+        ) : (
+          <View style={styles.appIcon}>
+            <Text style={styles.appIconText}>{item.appName[0]}</Text>
+          </View>
+        )}
+      </View>
       <View style={styles.appInfo}>
         <Text style={styles.appName}>{item.appName}</Text>
       </View>
@@ -241,7 +243,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    gap: 10,
     marginTop: 10,
     width: '100%',
     paddingHorizontal: 20,
@@ -256,6 +257,7 @@ const styles = StyleSheet.create({
   editButtonHalf: {
     flex: 1,
     paddingHorizontal: 15,
+    marginHorizontal: 5,
   },
   editButtonText: {
     color: '#fff',
@@ -276,49 +278,68 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   section: {
-    backgroundColor: '#fff',
+    backgroundColor: '#F0F2FF',
     marginTop: 10,
-    padding: 15,
+    padding: 16,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#1A1A1A',
-    marginBottom: 15,
+    marginBottom: 18,
+    paddingLeft: 2,
   },
   appCard: {
     flexDirection: 'row',
-    padding: 12,
-    backgroundColor: '#f9f9f9',
-    marginBottom: 8,
-    borderRadius: 8,
+    padding: 14,
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    borderRadius: 12,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 6,
+    elevation: 1,
+    borderWidth: 1,
+    borderColor: '#f5f5f5',
+  },
+  appIconWrapper: {
+    marginRight: 14,
   },
   appIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 8,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
     backgroundColor: '#6C63FF',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+    shadowColor: '#6C63FF',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 2,
   },
   appIconImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 8,
-    marginRight: 12,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   appIconText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   appInfo: {
     flex: 1,
   },
   appName: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: '600',
     color: '#1A1A1A',
   },
