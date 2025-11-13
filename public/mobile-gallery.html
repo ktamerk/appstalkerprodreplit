@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appstalker - Mobile Screens Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .header p {
+            font-size: 20px;
+            opacity: 0.95;
+        }
+        
+        .screens-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .phone-frame {
+            background: #1A1A1A;
+            border-radius: 40px;
+            padding: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            position: relative;
+        }
+        
+        .phone-notch {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #1A1A1A;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+        
+        .screen {
+            background: #F0F2FF;
+            border-radius: 30px;
+            overflow: hidden;
+            height: 700px;
+            position: relative;
+        }
+        
+        .screen-title {
+            background: white;
+            padding: 50px 20px 20px 20px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .screen-title h2 {
+            font-size: 24px;
+            color: #1A1A1A;
+            font-weight: 700;
+        }
+        
+        .screen-content {
+            padding: 16px;
+            overflow-y: auto;
+            height: calc(100% - 90px);
+        }
+        
+        /* Feed Screen */
+        .feed-search {
+            background: white;
+            padding: 14px 20px;
+            margin: 0 0 12px 0;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(108, 99, 255, 0.08);
+        }
+        
+        .feed-search span {
+            margin-right: 10px;
+        }
+        
+        .feed-search input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 16px;
+            background: transparent;
+        }
+        
+        .user-card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(108, 99, 255, 0.12);
+        }
+        
+        .user-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #6C63FF, #9F8FFF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 22px;
+            margin-right: 14px;
+            border: 2px solid #FFD369;
+            flex-shrink: 0;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .display-name {
+            font-size: 17px;
+            font-weight: bold;
+            color: #1A1A1A;
+            margin-bottom: 2px;
+        }
+        
+        .username {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .apps-section {
+            border-top: 1px solid #f0f0f0;
+            padding-top: 14px;
+            margin-top: 4px;
+        }
+        
+        .apps-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .apps-bubbles {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .app-bubble {
+            width: 54px;
+            height: 54px;
+            border-radius: 27px;
+            background: linear-gradient(135deg, #6C63FF, #9F8FFF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            box-shadow: 0 2px 4px rgba(108, 99, 255, 0.2);
+        }
+        
+        .app-bubble.more {
+            background: #F0F2FF;
+            border: 2px dashed #6C63FF;
+            color: #6C63FF;
+            font-size: 14px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        
+        .btn-secondary {
+            flex: 1;
+            background: white;
+            border: 1.5px solid #6C63FF;
+            color: #6C63FF;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 15px;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            flex: 1;
+            background: #6C63FF;
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 15px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(108, 99, 255, 0.25);
+        }
+        
+        /* Notifications Screen */
+        .notification-header {
+            background: white;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .mark-all-btn {
+            background: #6C63FF;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 2px 4px rgba(108, 99, 255, 0.2);
+        }
+        
+        .notification-card {
+            background: white;
+            padding: 16px;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+        
+        .notification-card.unread {
+            background: #F0F2FF;
+            border-left: 4px solid #6C63FF;
+        }
+        
+        .notification-card.unread.installed {
+            border-left-color: #FFD369;
+        }
+        
+        .notification-card.unread.liked {
+            border-left-color: #FF6B9D;
+        }
+        
+        .notification-card.unread.friend {
+            border-left-color: #4ECDC4;
+        }
+        
+        .icon-badge {
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 14px;
+            flex-shrink: 0;
+        }
+        
+        .icon-badge.follow { background: rgba(108, 99, 255, 0.2); }
+        .icon-badge.installed { background: rgba(255, 211, 105, 0.2); }
+        .icon-badge.liked { background: rgba(255, 107, 157, 0.2); }
+        .icon-badge.friend { background: rgba(78, 205, 196, 0.2); }
+        
+        .notification-content {
+            flex: 1;
+        }
+        
+        .notification-text {
+            font-size: 15px;
+            color: #1A1A1A;
+            margin-bottom: 5px;
+        }
+        
+        .notification-text strong {
+            font-weight: bold;
+        }
+        
+        .notification-time {
+            font-size: 11px;
+            color: #bbb;
+            font-weight: 500;
+        }
+        
+        .unread-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 5px;
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+        
+        /* Profile Screen */
+        .profile-header {
+            background: white;
+            padding: 20px 16px 12px 16px;
+        }
+        
+        .profile-top {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .profile-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 35px;
+            background: linear-gradient(135deg, #6C63FF, #9F8FFF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 28px;
+            margin-right: 16px;
+            border: 3px solid #FFD369;
+            flex-shrink: 0;
+        }
+        
+        .profile-stats {
+            display: flex;
+            flex: 1;
+            justify-content: space-around;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1A1A1A;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            color: #666;
+            margin-top: 2px;
+        }
+        
+        .profile-info {
+            margin-bottom: 12px;
+        }
+        
+        .profile-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1A1A1A;
+            margin-bottom: 4px;
+        }
+        
+        .profile-bio {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .profile-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .profile-btn {
+            flex: 1;
+            background: #6C63FF;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .apps-section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1A1A1A;
+            margin-bottom: 18px;
+            padding-left: 2px;
+        }
+        
+        .app-card {
+            background: white;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f5f5f5;
+        }
+        
+        .app-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #6C63FF, #9F8FFF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 22px;
+            margin-right: 14px;
+            box-shadow: 0 2px 4px rgba(108, 99, 255, 0.15);
+            flex-shrink: 0;
+        }
+        
+        .app-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+        
+        .tab-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            padding: 8px 0;
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+        }
+        
+        .tab-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        
+        .tab-label {
+            font-size: 10px;
+            color: #666;
+        }
+        
+        .tab.active .tab-label {
+            color: #6C63FF;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .screens-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 Appstalker Mobile Screens</h1>
+            <p>Premium Apple HIG UI/UX Design</p>
+        </div>
+
+        <div class="screens-grid">
+            <!-- Feed Screen -->
+            <div class="phone-frame">
+                <div class="phone-notch"></div>
+                <div class="screen">
+                    <div class="screen-title">
+                        <h2>Feed</h2>
+                    </div>
+                    <div class="screen-content">
+                        <div class="feed-search">
+                            <span>🔍</span>
+                            <input type="text" placeholder="Search people or apps..." readonly>
+                        </div>
+                        
+                        <div class="user-card">
+                            <div class="user-header">
+                                <div class="avatar">A</div>
+                                <div class="user-info">
+                                    <div class="display-name">Alex Johnson</div>
+                                    <div class="username">@alexj</div>
+                                </div>
+                            </div>
+                            <div class="apps-section">
+                                <div class="apps-label">📱 12 apps</div>
+                                <div class="apps-bubbles">
+                                    <div class="app-bubble">I</div>
+                                    <div class="app-bubble">S</div>
+                                    <div class="app-bubble">W</div>
+                                    <div class="app-bubble">T</div>
+                                    <div class="app-bubble more">+8</div>
+                                </div>
+                            </div>
+                            <div class="cta-buttons">
+                                <div class="btn-secondary">View Profile</div>
+                                <div class="btn-primary">See Apps</div>
+                            </div>
+                        </div>
+                        
+                        <div class="user-card">
+                            <div class="user-header">
+                                <div class="avatar">M</div>
+                                <div class="user-info">
+                                    <div class="display-name">Maria Garcia</div>
+                                    <div class="username">@mariag</div>
+                                </div>
+                            </div>
+                            <div class="apps-section">
+                                <div class="apps-label">📱 8 apps</div>
+                                <div class="apps-bubbles">
+                                    <div class="app-bubble">G</div>
+                                    <div class="app-bubble">D</div>
+                                    <div class="app-bubble">N</div>
+                                    <div class="app-bubble more">+5</div>
+                                </div>
+                            </div>
+                            <div class="cta-buttons">
+                                <div class="btn-secondary">View Profile</div>
+                                <div class="btn-primary">See Apps</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-bar">
+                        <div class="tab active">
+                            <div class="tab-icon">📰</div>
+                            <div class="tab-label">Feed</div>
+                        </div>
+                        <div class="tab">
+                            <div class="tab-icon">🔍</div>
+                            <div class="tab-label">Search</div>
+                        </div>
+                        <div class="tab">
+                            <div class="tab-icon">🔔</div>
+                            <div class="tab-label">Notifications</div>
+                        </div>
+                        <div class="tab">
+                            <div class="tab-icon">👤</div>
+                            <div class="tab-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications Screen -->
+            <div class="phone-frame">
+                <div class="phone-notch"></div>
+                <div class="screen">
+                    <div class="screen-title">
+                        <h2>Notifications</h2>
+                    </div>
+                    <div class="notification-header">
+                        <div class="mark-all-btn">✓ Mark All Read</div>
+                    </div>
+                    <div class="screen-content">
+                        <div class="notification-card unread">
+                            <div class="icon-badge follow">👤</div>
+                            <div class="notification-content">
+                                <div class="notification-text">
+                                    <strong>Sarah Williams</strong> started following you
+                                </div>
+                                <div class="notification-time">2m ago</div>
+                            </div>
+                            <div class="unread-dot" style="background: #6C63FF;"></div>
+                        </div>
+                        
+                        <div class="notification-card unread installed">
+                            <div class="icon-badge installed">📱</div>
+                            <div class="notification-content">
+                                <div class="notification-text">
+                                    <strong>Mike Chen</strong> installed Instagram
+                                </div>
+                                <div class="notification-time">15m ago</div>
+                            </div>
+                            <div class="unread-dot" style="background: #FFD369;"></div>
+                        </div>
+                        
+                        <div class="notification-card unread liked">
+                            <div class="icon-badge liked">❤️</div>
+                            <div class="notification-content">
+                                <div class="notification-text">
+                                    <strong>Emma Davis</strong> liked your profile
+                                </div>
+                                <div class="notification-time">1h ago</div>
+                            </div>
+                            <div class="unread-dot" style="background: #FF6B9D;"></div>
+                        </div>
+                        
+                        <div class="notification-card unread friend">
+                            <div class="icon-badge friend">🤝</div>
+                            <div class="notification-content">
+                                <div class="notification-text">
+                                    <strong>John Smith</strong> sent you a friend request
+                                </div>
+                                <div class="notification-time">2h ago</div>
+                            </div>
+                            <div class="unread-dot" style="background: #4ECDC4;"></div>
+                        </div>
+                        
+                        <div class="notification-card">
+                            <div class="icon-badge follow">👤</div>
+                            <div class="notification-content">
+                                <div class="notification-text">
+                                    <strong>Lisa Brown</strong> started following you
+                                </div>
+                                <div class="notification-time">1d ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-bar">
+                        <div class="tab">
+                            <div class="tab-icon">📰</div>
+                            <div class="tab-label">Feed</div>
+                        </div>
+                        <div class="tab">
+                            <div class="tab-icon">🔍</div>
+                            <div class="tab-label">Search</div>
+                        </div>
+                        <div class="tab active">
+                            <div class="tab-icon">🔔</div>
+                            <div class="tab-label">Notifications</div>
+                        </div>
+                        <div class="tab">
+                            <div class="tab-icon">👤</div>
+                            <div class="tab-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Screen -->
+            <div class="phone-frame">
+                <div class="phone-notch"></div>
+                <div class="screen">
+                    <div class="screen-title">
+                        <h2>Profile</h2>
+                    </div>
+                    <div class="profile-header">
+                        <div class="profile-top">
+                            <div class="profile-avatar">J</div>
+                            <div class="profile-stats">
+                                <div class="stat">
+                                    <div class="stat-value">1.2K</div>
+                                    <div class="stat-label">Followers</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">543</div>
+                                    <div class="stat-label">Following</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">24</div>
+                                    <div class="stat-label">Apps</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-info">
+                            <div class="profile-name">John Doe</div>
+                            <div class="profile-bio">📱 Tech enthusiast | 🎮 Gamer | 🎵 Music lover</div>
+                        </div>
+                        <div class="profile-buttons">
+                            <div class="profile-btn">Edit Profile</div>
+                            <div class="profile-btn">Manage Apps</div>
+                        </div>
+                    </div>
+                    
+                    <div class="screen-content">
+                        <div class="apps-section-title">Installed Apps</div>
+                        
+                        <div class="app-card">
+                            <div class="app-icon">I</div>
+                            <div class="app-name">Instagram</div>
+                        </div>
+                        
+                        <div class="app-card">
+                            <div class="app-icon">S</div>
+                            <div class="app-name">Spotify</div>
+                        </div>
+                        
+                        <div class="app-card">
+                            <div class="app-icon">W</div>
+                            <div class="app-name">WhatsApp</div>
+                        </div>
+                        
+                        <div class="app-card">
+                            <div class="app-icon">T</div>
+                            <div class="app-name">Twitter</div>
+                        </div>
+                        
+                        <div class="app-card">
+                            <div class="app-icon">N</div>
+                            <div class="app-name">Netflix</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-bar">
+                        <div class="tab">
+                            <div class="tab-icon">📰</div>
+                            <div class="tab-label">Feed</div>
+                        </div>
+                        <div class="tab">
+                            <div class="tab-icon">🔍</div>
+                            <div class="tab-label">Search</div>
+                        </div>
+                        <div class="tab">
+                            <div class="tab-icon">🔔</div>
+                            <div class="tab-label">Notifications</div>
+                        </div>
+                        <div class="tab active">
+                            <div class="tab-icon">👤</div>
+                            <div class="tab-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; color: white; margin-top: 60px; opacity: 0.9;">
+            <h3 style="font-size: 24px; margin-bottom: 16px;">✨ Premium UI/UX Features</h3>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; max-width: 900px; margin: 0 auto;">
+                <div style="background: rgba(255,255,255,0.1); padding: 16px 24px; border-radius: 12px;">
+                    <div style="font-size: 32px; margin-bottom: 8px;">⭕</div>
+                    <div style="font-weight: 600;">Circular Icons</div>
+                    <div style="font-size: 14px; opacity: 0.9;">54x54 & 56x56 perfect circles</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 16px 24px; border-radius: 12px;">
+                    <div style="font-size: 32px; margin-bottom: 8px;">🌈</div>
+                    <div style="font-weight: 600;">Dynamic Colors</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Type-based notification colors</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 16px 24px; border-radius: 12px;">
+                    <div style="font-size: 32px; margin-bottom: 8px;">✨</div>
+                    <div style="font-weight: 600;">Premium Shadows</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Enhanced depth & hierarchy</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 16px 24px; border-radius: 12px;">
+                    <div style="font-size: 32px; margin-bottom: 8px;">🎯</div>
+                    <div style="font-weight: 600;">Apple HIG</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Human Interface Guidelines</div>
+                </div>
+            </div>
+            <p style="margin-top: 30px; font-size: 14px;">
+                🔗 <a href="/screens.html" style="color: #FFD369; text-decoration: none; font-weight: 600;">View Technical Documentation</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
