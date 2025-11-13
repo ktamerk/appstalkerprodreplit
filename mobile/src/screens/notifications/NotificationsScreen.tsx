@@ -121,7 +121,7 @@ export default function NotificationsScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F0F2FF',
   },
   centerContainer: {
     flex: 1,
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#eee',
   },
   markAllText: {
-    color: '#a8b5ff',
+    color: '#6C63FF',
     fontSize: 14,
     fontWeight: '600',
   },
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#6C63FF',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   },
   notificationText: {
     fontSize: 14,
-    color: '#333',
+    color: '#1A1A1A',
   },
   username: {
     fontWeight: 'bold',
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#6C63FF',
   },
   emptyContainer: {
     padding: 40,

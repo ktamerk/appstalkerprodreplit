@@ -263,7 +263,7 @@ export default function FeedScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F0F2FF',
   },
   centerContainer: {
     flex: 1,
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#333',
+    color: '#1A1A1A',
     padding: 0,
   },
   clearIcon: {
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#6C63FF',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
   displayName: {
     fontSize: 17,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#1A1A1A',
     marginBottom: 2,
   },
   username: {
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 10,
-    backgroundColor: '#d4a5f5',
+    backgroundColor: '#6C63FF',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 4,
@@ -414,7 +414,7 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#333',
+    color: '#1A1A1A',
     marginBottom: 8,
     textAlign: 'center',
   },
@@ -425,18 +425,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#FFD369',
     borderRadius: 12,
     padding: 16,
     paddingHorizontal: 32,
-    shadowColor: '#a8b5ff',
+    shadowColor: '#FFD369',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 3,
   },
   buttonText: {
-    color: '#fff',
+    color: '#1A1A1A',
     fontSize: 16,
     fontWeight: 'bold',
   },

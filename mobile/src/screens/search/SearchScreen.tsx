@@ -84,7 +84,7 @@ export default function SearchScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F0F2FF',
   },
   searchContainer: {
     padding: 15,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#6C63FF',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 15,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   displayName: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#1A1A1A',
   },
   username: {
     fontSize: 14,

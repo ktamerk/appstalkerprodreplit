@@ -155,13 +155,13 @@ export default function ManageAppsScreen({ navigation }: any) {
           </View>
         </View>
         {isUpdating ? (
-          <ActivityIndicator size="small" color="#a8b5ff" />
+          <ActivityIndicator size="small" color="#6C63FF" />
         ) : (
           <Switch
             value={item.isVisible}
             onValueChange={() => toggleVisibility(item)}
             trackColor={{ false: '#ccc', true: '#d4a5f5' }}
-            thumbColor={item.isVisible ? '#a8b5ff' : '#f4f3f4'}
+            thumbColor={item.isVisible ? '#6C63FF' : '#f4f3f4'}
           />
         )}
       </View>
@@ -174,7 +174,7 @@ export default function ManageAppsScreen({ navigation }: any) {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#a8b5ff" />
+        <ActivityIndicator size="large" color="#6C63FF" />
         <Text style={styles.loadingText}>Loading apps...</Text>
       </View>
     );
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#1A1A1A',
   },
   headerSubtitle: {
     fontSize: 14,
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
   },
   actionButton: {
     flex: 1,
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#6C63FF',
     padding: 12,
     borderRadius: 8,
     alignItems: 'center',
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   actionButtonSecondary: {
     backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: '#a8b5ff',
+    borderColor: '#6C63FF',
   },
   actionButtonText: {
     color: '#fff',
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   actionButtonTextSecondary: {
-    color: '#a8b5ff',
+    color: '#6C63FF',
   },
   listContent: {
     padding: 15,
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   appIconPlaceholder: {
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#6C63FF',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
+    color: '#1A1A1A',
     marginBottom: 2,
   },
   appPackage: {

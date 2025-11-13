@@ -95,7 +95,7 @@ export default function SettingsScreen({ navigation, onLogout }: SettingsScreenP
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F0F2FF',
   },
   section: {
     marginTop: 20,

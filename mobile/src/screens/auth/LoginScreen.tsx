@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#1A1A1A',
     marginBottom: 12,
   },
   tagline: {
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   },
   taglineSecondary: {
     fontSize: 16,
-    color: '#a8b5ff',
+    color: '#6C63FF',
     fontWeight: '600',
     marginTop: 4,
   },
@@ -143,15 +143,15 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     fontSize: 16,
-    color: '#333',
+    color: '#1A1A1A',
   },
   button: {
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#6C63FF',
     borderRadius: 12,
     padding: 18,
     alignItems: 'center',
     marginTop: 20,
-    shadowColor: '#a8b5ff',
+    shadowColor: '#6C63FF',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   linkBold: {
-    color: '#a8b5ff',
+    color: '#6C63FF',
     fontWeight: 'bold',
   },
 });

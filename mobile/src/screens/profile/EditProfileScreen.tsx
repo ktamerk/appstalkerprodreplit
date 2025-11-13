@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#6C63FF',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   changePhotoText: {
-    color: '#a8b5ff',
+    color: '#6C63FF',
     fontSize: 16,
     marginTop: 10,
     fontWeight: '600',
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
+    color: '#1A1A1A',
     marginBottom: 8,
     marginTop: 15,
   },
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#6C63FF',
     borderRadius: 8,
     padding: 15,
     alignItems: 'center',

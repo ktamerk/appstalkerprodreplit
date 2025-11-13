@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#1A1A1A',
     marginBottom: 8,
   },
   version: {
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   taglineSecondary: {
     fontSize: 14,
-    color: '#a8b5ff',
+    color: '#6C63FF',
     fontWeight: '600',
     marginTop: 4,
   },
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#1A1A1A',
     marginBottom: 12,
   },
   description: {

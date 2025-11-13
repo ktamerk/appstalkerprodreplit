@@ -72,7 +72,7 @@ export default function HelpScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F0F2FF',
   },
   section: {
     marginTop: 16,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#1A1A1A',
     marginBottom: 12,
   },
   card: {
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   question: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
+    color: '#1A1A1A',
     marginBottom: 8,
   },
   answer: {
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   button: {
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#6C63FF',
     borderRadius: 8,
     padding: 14,
     alignItems: 'center',

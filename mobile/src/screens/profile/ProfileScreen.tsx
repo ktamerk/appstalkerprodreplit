@@ -3,6 +3,16 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView, Image }
 import api from '../../services/api';
 import { API_ENDPOINTS } from '../../config/api';
 
+const formatCount = (count: number): string => {
+  if (count >= 1000000) {
+    return `${(count / 1000000).toFixed(1)}M`;
+  }
+  if (count >= 1000) {
+    return `${(count / 1000).toFixed(1)}K`;
+  }
+  return count.toString();
+};
+
 export default function ProfileScreen({ route, navigation }: any) {
   const [profile, setProfile] = useState<any>(null);
   const [apps, setApps] = useState([]);
@@ -45,7 +55,6 @@ export default function ProfileScreen({ route, navigation }: any) {
       )}
       <View style={styles.appInfo}>
         <Text style={styles.appName}>{item.appName}</Text>
-        <Text style={styles.packageName}>{item.packageName}</Text>
       </View>
     </View>
   );
@@ -69,31 +78,40 @@ export default function ProfileScreen({ route, navigation }: any) {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        {profile.avatarUrl ? (
-          <Image source={{ uri: profile.avatarUrl }} style={styles.avatarImage} />
-        ) : (
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>
-              {profile.displayName[0].toUpperCase()}
-            </Text>
+        <View style={styles.avatarRow}>
+          {profile.avatarUrl ? (
+            <View style={styles.avatarContainer}>
+              <Image source={{ uri: profile.avatarUrl }} style={styles.avatarImage} />
+            </View>
+          ) : (
+            <View style={styles.avatarContainer}>
+              <View style={[styles.avatar, styles.gradientAvatar]}>
+                <Text style={styles.avatarText}>
+                  {profile.displayName[0].toUpperCase()}
+                </Text>
+              </View>
+            </View>
+          )}
+          
+          <View style={styles.statsCompact}>
+            <View style={styles.statCompact}>
+              <Text style={styles.statValueCompact}>{formatCount(profile.followersCount || 0)}</Text>
+              <Text style={styles.statLabelCompact}>Followers</Text>
+            </View>
+            <View style={styles.statCompact}>
+              <Text style={styles.statValueCompact}>{formatCount(profile.followingCount || 0)}</Text>
+              <Text style={styles.statLabelCompact}>Following</Text>
+            </View>
+            <View style={styles.statCompact}>
+              <Text style={styles.statValueCompact}>{formatCount(apps.length)}</Text>
+              <Text style={styles.statLabelCompact}>Apps</Text>
+            </View>
           </View>
-        )}
-        <Text style={styles.displayName}>{profile.displayName}</Text>
-        {profile.bio && <Text style={styles.bio}>{profile.bio}</Text>}
-        
-        <View style={styles.stats}>
-          <View style={styles.stat}>
-            <Text style={styles.statValue}>{profile.followersCount || 0}</Text>
-            <Text style={styles.statLabel}>Followers</Text>
-          </View>
-          <View style={styles.stat}>
-            <Text style={styles.statValue}>{profile.followingCount || 0}</Text>
-            <Text style={styles.statLabel}>Following</Text>
-          </View>
-          <View style={styles.stat}>
-            <Text style={styles.statValue}>{apps.length}</Text>
-            <Text style={styles.statLabel}>Apps</Text>
-          </View>
+        </View>
+
+        <View style={styles.profileInfo}>
+          <Text style={styles.displayName}>{profile.displayName}</Text>
+          {profile.bio && <Text style={styles.bio}>{profile.bio}</Text>}
         </View>
 
         {!username && (
@@ -144,7 +162,7 @@ export default function ProfileScreen({ route, navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F0F2FF',
   },
   centerContainer: {
     flex: 1,
@@ -153,59 +171,73 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#fff',
-    padding: 20,
+    paddingTop: 16,
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+  },
+  avatarRow: {
+    flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 12,
+  },
+  avatarContainer: {
+    marginRight: 16,
   },
   avatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: '#a8b5ff',
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: '#6C63FF',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 15,
+  },
+  gradientAvatar: {
+    borderWidth: 3,
+    borderColor: '#FFD369',
   },
   avatarImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    marginBottom: 15,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    borderWidth: 3,
+    borderColor: '#FFD369',
   },
   avatarText: {
     color: '#fff',
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: 'bold',
   },
+  profileInfo: {
+    marginBottom: 12,
+  },
   displayName: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 8,
+    color: '#1A1A1A',
+    marginBottom: 4,
   },
   bio: {
     fontSize: 14,
     color: '#666',
-    textAlign: 'center',
-    marginBottom: 15,
+    lineHeight: 20,
   },
-  stats: {
+  statsCompact: {
     flexDirection: 'row',
-    marginTop: 15,
-    marginBottom: 15,
+    flex: 1,
+    justifyContent: 'space-around',
   },
-  stat: {
+  statCompact: {
     alignItems: 'center',
-    marginHorizontal: 20,
   },
-  statValue: {
-    fontSize: 20,
+  statValueCompact: {
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#1A1A1A',
   },
-  statLabel: {
-    fontSize: 12,
+  statLabelCompact: {
+    fontSize: 11,
     color: '#666',
-    marginTop: 4,
+    marginTop: 2,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -215,7 +247,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   editButton: {
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#6C63FF',
     borderRadius: 8,
     padding: 12,
     paddingHorizontal: 30,
@@ -251,7 +283,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#1A1A1A',
     marginBottom: 15,
   },
   appCard: {
@@ -266,7 +298,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 8,
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#6C63FF',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
@@ -288,12 +320,7 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
-  },
-  packageName: {
-    fontSize: 12,
-    color: '#666',
-    marginTop: 2,
+    color: '#1A1A1A',
   },
   emptyText: {
     textAlign: 'center',

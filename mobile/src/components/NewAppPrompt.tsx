@@ -87,7 +87,7 @@ export default function NewAppPrompt({
           value={isSelected}
           onValueChange={() => toggleApp(item.packageName)}
           trackColor={{ false: '#ccc', true: '#d4a5f5' }}
-          thumbColor={isSelected ? '#a8b5ff' : '#f4f3f4'}
+          thumbColor={isSelected ? '#6C63FF' : '#f4f3f4'}
         />
       </TouchableOpacity>
     );
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#1A1A1A',
     marginBottom: 5,
   },
   subtitle: {
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   appIconPlaceholder: {
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#6C63FF',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
+    color: '#1A1A1A',
     marginBottom: 2,
   },
   appPackage: {
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   selectAllText: {
-    color: '#a8b5ff',
+    color: '#6C63FF',
     fontSize: 16,
     fontWeight: '600',
   },
@@ -249,12 +249,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonPrimary: {
-    backgroundColor: '#a8b5ff',
+    backgroundColor: '#6C63FF',
   },
   buttonSecondary: {
     backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: '#a8b5ff',
+    borderColor: '#6C63FF',
   },
   buttonText: {
     color: '#fff',
@@ -262,6 +262,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   buttonTextSecondary: {
-    color: '#a8b5ff',
+    color: '#6C63FF',
   },
 });
