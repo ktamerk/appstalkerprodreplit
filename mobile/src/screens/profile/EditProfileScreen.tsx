@@ -132,13 +132,15 @@ export default function EditProfileScreen({ navigation }: any) {
         <Switch value={isPrivate} onValueChange={setIsPrivate} />
       </View>
 
-      <TouchableOpacity
-        style={[styles.button, loading && styles.buttonDisabled]}
-        onPress={handleUpdate}
-        disabled={loading}
-      >
-        <Text style={styles.buttonText}>{loading ? 'Updating...' : 'Save Changes'}</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[styles.button, loading && styles.buttonDisabled]}
+          onPress={handleUpdate}
+          disabled={loading}
+        >
+          <Text style={styles.buttonText}>{loading ? 'Saving...' : 'Save'}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -211,12 +213,16 @@ const styles = StyleSheet.create({
   switchLabel: {
     flex: 1,
   },
+  buttonContainer: {
+    alignItems: 'center',
+    marginTop: 30,
+  },
   button: {
     backgroundColor: '#6C63FF',
     borderRadius: 8,
-    padding: 15,
+    paddingVertical: 12,
+    paddingHorizontal: 40,
     alignItems: 'center',
-    marginTop: 30,
   },
   buttonDisabled: {
     backgroundColor: '#999',

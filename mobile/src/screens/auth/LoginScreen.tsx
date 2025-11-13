@@ -36,11 +36,9 @@ export default function LoginScreen({ navigation, onLogin }: LoginScreenProps) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Text style={styles.logo}>📱</Text>
-        <Text style={styles.title}>Appstalker</Text>
-        <Text style={styles.tagline}>Discover what apps people use.</Text>
-        <Text style={styles.taglineSecondary}>Find your digital tribe.</Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.title}>Welcome Back</Text>
+        <Text style={styles.subtitle}>Sign in to continue</Text>
       </View>
 
       <View style={styles.formContainer}>
@@ -92,38 +90,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  logoContainer: {
-    flex: 0.4,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 60,
-  },
-  logo: {
-    fontSize: 72,
-    marginBottom: 10,
+  headerContainer: {
+    padding: 30,
+    paddingTop: 80,
+    paddingBottom: 40,
   },
   title: {
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#1A1A1A',
-    marginBottom: 12,
+    marginBottom: 8,
   },
-  tagline: {
-    fontSize: 18,
-    color: '#666',
-    textAlign: 'center',
-    marginTop: 8,
-  },
-  taglineSecondary: {
+  subtitle: {
     fontSize: 16,
-    color: '#6C63FF',
-    fontWeight: '600',
-    marginTop: 4,
+    color: '#666',
   },
   formContainer: {
-    flex: 0.6,
     padding: 30,
-    justifyContent: 'center',
+    paddingTop: 20,
   },
   inputContainer: {
     flexDirection: 'row',

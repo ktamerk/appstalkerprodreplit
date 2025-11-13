@@ -46,6 +46,7 @@ export default function SearchScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
+        <Text style={styles.searchLabel}>Search</Text>
         <TextInput
           style={styles.searchInput}
           placeholder="Search users..."
@@ -91,6 +92,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
+  },
+  searchLabel: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#1A1A1A',
+    marginBottom: 12,
   },
   searchInput: {
     borderWidth: 1,

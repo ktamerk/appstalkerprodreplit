@@ -75,6 +75,16 @@ export const notifications = pgTable('notifications', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
+export const activityLogs = pgTable('activity_logs', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  actionType: text('action_type').notNull(),
+  metadata: text('metadata'),
+  ipAddress: text('ip_address'),
+  userAgent: text('user_agent'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
 export const usersRelations = relations(users, ({ one, many }) => ({
   profile: one(profiles, {
     fields: [users.id],
@@ -87,6 +97,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   receivedRequests: many(friendRequests, { relationName: 'receivedRequests' }),
   likes: many(likes),
   notifications: many(notifications),
+  activityLogs: many(activityLogs),
 }));
 
 export const profilesRelations = relations(profiles, ({ one, many }) => ({
@@ -148,6 +159,13 @@ export const notificationsRelations = relations(notifications, ({ one }) => ({
   }),
   relatedUser: one(users, {
     fields: [notifications.relatedUserId],
+    references: [users.id],
+  }),
+}));
+
+export const activityLogsRelations = relations(activityLogs, ({ one }) => ({
+  user: one(users, {
+    fields: [activityLogs.userId],
     references: [users.id],
   }),
 }));
