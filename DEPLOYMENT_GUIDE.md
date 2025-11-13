@@ -290,6 +290,33 @@ javac -version
 
 ---
 
+## 🔧 Environment Variables (İHTİYAÇ YOK!)
+
+**ÖNEMLİ:** Bu proje için **.env dosyasına ihtiyacınız YOK!** 🎉
+
+API URL'leri otomatik olarak platform bazlı seçiliyor:
+- **Android Emulator**: `http://10.0.2.2:5000` (otomatik)
+- **iOS Simulator**: `http://localhost:5000` (otomatik)
+- **Production**: Deploy ederken güncellersiniz
+
+Kaynak: `mobile/src/config/api.ts`
+
+URL'leri değiştirmek isterseniz:
+```typescript
+// mobile/src/config/api.ts dosyasını açın
+const getBaseUrl = () => {
+  if (__DEV__) {
+    if (Platform.OS === 'android') {
+      return 'http://10.0.2.2:5000'; // Buradan değiştirin
+    }
+    return 'http://localhost:5000';
+  }
+  return 'https://your-production-url.com'; // Production URL
+};
+```
+
+---
+
 ## 📊 Özet Komutlar
 
 ### GitHub'a Push:

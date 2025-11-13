@@ -8,23 +8,23 @@ const getBaseUrl = () => {
   if (__DEV__) {
     // Android emulator için
     if (Platform.OS === 'android') {
-      return process.env.API_URL || 'http://10.0.2.2:5000';
+      return 'http://10.0.2.2:5000';
     }
     // iOS simulator için
-    return process.env.API_URL || 'http://localhost:5000';
+    return 'http://localhost:5000';
   }
   // Production için (deploy edildiğinde)
-  return process.env.API_URL || 'https://your-production-url.com';
+  return 'https://your-production-url.com';
 };
 
 const getWsUrl = () => {
   if (__DEV__) {
     if (Platform.OS === 'android') {
-      return process.env.WS_URL || 'ws://10.0.2.2:5000/ws';
+      return 'ws://10.0.2.2:5000/ws';
     }
-    return process.env.WS_URL || 'ws://localhost:5000/ws';
+    return 'ws://localhost:5000/ws';
   }
-  return process.env.WS_URL || 'wss://your-production-url.com/ws';
+  return 'wss://your-production-url.com/ws';
 };
 
 export const API_CONFIG = {
