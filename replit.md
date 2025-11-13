@@ -39,7 +39,16 @@ Appstalker is a cross-platform mobile social networking application that allows 
 - **QUICK_COMMANDS.sh** - Hızlı komut referansı
 - **WINDOWS_SETUP.md** - Windows kullanıcıları için özel kurulum
 
+## Database Schema Updates
+- **activity_logs** table: Tracks all user actions (login, profile_update, app_install, follow, like, etc) with metadata, IP address, and user agent
+
 ## Recent Changes
+- 2025-11-13: **UI Refinements & Activity Logging**:
+  - **Login/Register**: Removed Appstalker logo emoji, simplified to "Welcome Back" / "Create Account" headers
+  - **Search Screen**: Removed magnifying glass icon, text-only "Search" heading for cleaner look
+  - **Edit Profile**: Changed button from "Save Changes" to "Save", made it smaller and centered (12px/40px padding)
+  - **Database**: Added activity_logs table for user action tracking (action_type, metadata, IP, user agent)
+  - **mobile-gallery.html**: Updated all screen mockups with latest design changes
 - 2025-11-13: **Premium Apple HIG UI/UX Redesign** - Complete overhaul with Apple Human Interface Guidelines:
   - **Feed Screen**: Premium cards (shadowRadius 12, padding 20px), circular mini app icons (54x54, borderRadius 27), larger avatars (56x56 with #FFD369 border), CTA buttons ("View Profile", "See Apps"), rounded pill search (borderRadius 28)
   - **Notifications Screen**: Type-based icons (👤📱❤️🤝), dynamic color accents (#6C63FF follow, #FFD369 installed, #FF6B9D liked, #4ECDC4 friend), circular badges (48x48), dynamic unread borders, relative time ("2m ago"), premium "Mark All Read" button
