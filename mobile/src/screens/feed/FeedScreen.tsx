@@ -6,6 +6,7 @@ import { API_ENDPOINTS } from '../../config/api';
 import { getInstalledApps, syncAppsWithServer } from '../../utils/appScanner';
 import { getAppCache, saveAppCache } from '../../utils/appCache';
 import NewAppPrompt from '../../components/NewAppPrompt';
+import { getImageSource } from '../../utils/iconHelpers';
 
 interface NewApp {
   packageName: string;
@@ -169,17 +170,20 @@ export default function FeedScreen({ navigation }: any) {
           <View style={styles.appsContainer}>
             <Text style={styles.appsLabel}>📱 {item.apps.length} apps</Text>
             <View style={styles.appsList}>
-              {item.apps.slice(0, 4).map((app: any, index: number) => (
-                <View key={app.id || index} style={styles.miniAppBubble}>
-                  {app.appIcon ? (
-                    <Image source={{ uri: app.appIcon }} style={styles.miniAppIcon} />
-                  ) : (
-                    <View style={styles.miniAppIconPlaceholder}>
-                      <Text style={styles.miniAppIconText}>{app.appName[0]}</Text>
-                    </View>
-                  )}
-                </View>
-              ))}
+              {item.apps.slice(0, 4).map((app: any, index: number) => {
+                const iconSource = getImageSource(app.appIcon);
+                return (
+                  <View key={app.id || index} style={styles.miniAppBubble}>
+                    {iconSource ? (
+                      <Image source={{ uri: iconSource }} style={styles.miniAppIcon} />
+                    ) : (
+                      <View style={styles.miniAppIconPlaceholder}>
+                        <Text style={styles.miniAppIconText}>{app.appName[0]}</Text>
+                      </View>
+                    )}
+                  </View>
+                );
+              })}
               {item.apps.length > 4 && (
                 <View style={styles.miniAppBubble}>
                   <View style={styles.moreAppsCircle}>

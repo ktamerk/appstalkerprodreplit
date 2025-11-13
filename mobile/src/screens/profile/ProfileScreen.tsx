@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView, Image } from 'react-native';
 import api from '../../services/api';
 import { API_ENDPOINTS } from '../../config/api';
+import { getImageSource } from '../../utils/iconHelpers';
 
 const formatCount = (count: number): string => {
   if (count >= 1000000) {
@@ -41,25 +42,28 @@ export default function ProfileScreen({ route, navigation }: any) {
     }
   };
 
-  const renderApp = ({ item }: any) => (
-    <View style={styles.appCard}>
-      <View style={styles.appIconWrapper}>
-        {item.appIcon ? (
-          <Image
-            source={{ uri: item.appIcon }}
-            style={styles.appIconImage}
-          />
-        ) : (
-          <View style={styles.appIcon}>
-            <Text style={styles.appIconText}>{item.appName[0]}</Text>
-          </View>
-        )}
+  const renderApp = ({ item }: any) => {
+    const iconSource = getImageSource(item.appIcon);
+    return (
+      <View style={styles.appCard}>
+        <View style={styles.appIconWrapper}>
+          {iconSource ? (
+            <Image
+              source={{ uri: iconSource }}
+              style={styles.appIconImage}
+            />
+          ) : (
+            <View style={styles.appIcon}>
+              <Text style={styles.appIconText}>{item.appName[0]}</Text>
+            </View>
+          )}
+        </View>
+        <View style={styles.appInfo}>
+          <Text style={styles.appName}>{item.appName}</Text>
+        </View>
       </View>
-      <View style={styles.appInfo}>
-        <Text style={styles.appName}>{item.appName}</Text>
-      </View>
-    </View>
-  );
+    );
+  };
 
   if (loading) {
     return (
