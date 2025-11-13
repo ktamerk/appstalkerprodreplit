@@ -34,6 +34,11 @@ Appstalker is a cross-platform mobile social networking application that allows 
 - Notifications: real-time notifications for app installations and social actions
 
 ## Recent Changes
+- 2025-11-13: **Modern UI/UX Redesign** - Complete color palette and layout overhaul:
+  - **Color Scheme**: Updated to modern palette (#6C63FF primary, #F0F2FF background, #FFD369 accent, #1A1A1A text)
+  - **Profile Screen**: Compact header with avatar + stats side-by-side, follower counts formatted (1.2K style), #FFD369 avatar borders
+  - **Package Names**: Hidden from Profile and Feed views (only show app names), kept in ManageApps for user clarity
+  - **Consistent Styling**: All screens (Login, Register, Feed, Profile, Settings, Notifications, Search) updated with new palette
 - 2025-11-13: Major UI/UX improvements across all mobile screens:
   - Login: Enlarged logo, added tagline, strengthened CTA, added input icons
   - Register: Added icons, microcopy, password validation
@@ -48,7 +53,6 @@ Appstalker is a cross-platform mobile social networking application that allows 
 - 2025-11-11: Security fixes: privacy controls, WebSocket timeout, SESSION_SECRET warning
 - 2025-11-11: Web demo panel created for API testing
 - 2025-11-11: Architect review completed - MVP PASSED all requirements
-- 2025-11-11: Updated to pastel color scheme (#a8b5ff, #d4a5f5) across all interfaces
 - 2025-11-11: Translated all UI text to English (web demo and mobile screens)
 - 2025-11-11: Added profile photo upload functionality with backend endpoint and avatar display
 - 2025-11-11: Implemented app visibility selection feature:
