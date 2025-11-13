@@ -35,9 +35,9 @@ Appstalker is a cross-platform mobile social networking application that allows 
 
 ## Deployment & Setup Files
 - **DEPLOYMENT_GUIDE.md** - Tam deployment guide (GitHub + Android Emulator)
+- **DATABASE_DEPLOYMENT.md** - Database yönetimi ve seçenekleri (Replit vs Local)
 - **QUICK_COMMANDS.sh** - Hızlı komut referansı
 - **WINDOWS_SETUP.md** - Windows kullanıcıları için özel kurulum
-- **mobile/.env.example** - Environment variables template
 
 ## Recent Changes
 - 2025-11-13: **Premium Apple HIG UI/UX Redesign** - Complete overhaul with Apple Human Interface Guidelines:
