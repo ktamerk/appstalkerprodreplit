@@ -1,6 +1,35 @@
+import { Platform } from 'react-native';
+
+// __DEV__ global değişkeni TypeScript için
+declare const __DEV__: boolean;
+
+// Android Emulator için 10.0.2.2, iOS Simulator için localhost kullan
+const getBaseUrl = () => {
+  if (__DEV__) {
+    // Android emulator için
+    if (Platform.OS === 'android') {
+      return process.env.API_URL || 'http://10.0.2.2:5000';
+    }
+    // iOS simulator için
+    return process.env.API_URL || 'http://localhost:5000';
+  }
+  // Production için (deploy edildiğinde)
+  return process.env.API_URL || 'https://your-production-url.com';
+};
+
+const getWsUrl = () => {
+  if (__DEV__) {
+    if (Platform.OS === 'android') {
+      return process.env.WS_URL || 'ws://10.0.2.2:5000/ws';
+    }
+    return process.env.WS_URL || 'ws://localhost:5000/ws';
+  }
+  return process.env.WS_URL || 'wss://your-production-url.com/ws';
+};
+
 export const API_CONFIG = {
-  BASE_URL: process.env.API_URL || 'http://localhost:5000',
-  WS_URL: process.env.WS_URL || 'ws://localhost:5000/ws',
+  BASE_URL: getBaseUrl(),
+  WS_URL: getWsUrl(),
 };
 
 export const API_ENDPOINTS = {

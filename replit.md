@@ -33,6 +33,12 @@ Appstalker is a cross-platform mobile social networking application that allows 
 - Likes: likes on profiles
 - Notifications: real-time notifications for app installations and social actions
 
+## Deployment & Setup Files
+- **DEPLOYMENT_GUIDE.md** - Tam deployment guide (GitHub + Android Emulator)
+- **QUICK_COMMANDS.sh** - Hızlı komut referansı
+- **WINDOWS_SETUP.md** - Windows kullanıcıları için özel kurulum
+- **mobile/.env.example** - Environment variables template
+
 ## Recent Changes
 - 2025-11-13: **Premium Apple HIG UI/UX Redesign** - Complete overhaul with Apple Human Interface Guidelines:
   - **Feed Screen**: Premium cards (shadowRadius 12, padding 20px), circular mini app icons (54x54, borderRadius 27), larger avatars (56x56 with #FFD369 border), CTA buttons ("View Profile", "See Apps"), rounded pill search (borderRadius 28)
