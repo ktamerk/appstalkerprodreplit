@@ -12,7 +12,10 @@ export class InstalledAppsService {
   static async getInstalledApps(): Promise<InstalledApp[]> {
     if (Platform.OS === 'android') {
       try {
-        const apps = await DeviceApps.getApps();
+        const apps = await DeviceApps.getApps({
+          withIcons: true,
+          cacheIcons: true,
+        });
         
         return apps.map((app: any) => ({
           packageName: app.packageName,

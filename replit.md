@@ -43,6 +43,12 @@ Appstalker is a cross-platform mobile social networking application that allows 
 - **activity_logs** table: Tracks all user actions (login, profile_update, app_install, follow, like, etc) with metadata, IP address, and user agent
 
 ## Recent Changes
+- 2025-11-13: **Real App Icons Implementation**:
+  - **react-native-device-apps**: Added package to extract installed app icons from device packages
+  - **InstalledAppsService**: Created service to get apps with real Base64 icons from Android PackageManager
+  - **Icon Helper**: Created getImageSource() utility to handle Base64/URL icon formats (adds data:image/png;base64, prefix)
+  - **Feed & Profile Screens**: Updated to display real app icons using Base64 encoding
+  - **mobile-gallery.html**: Updated with Base64 SVG examples (Instagram, Spotify, WhatsApp, Twitter, Netflix, YouTube)
 - 2025-11-13: **UI Refinements & Activity Logging**:
   - **Login/Register**: Removed Appstalker logo emoji, simplified to "Welcome Back" / "Create Account" headers
   - **Search Screen**: Removed magnifying glass icon, text-only "Search" heading for cleaner look
