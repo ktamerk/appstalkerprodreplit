@@ -34,17 +34,17 @@ Appstalker is a cross-platform mobile social networking application that allows 
 - Notifications: real-time notifications for app installations and social actions
 
 ## Recent Changes
-- 2025-11-13: **Modern UI/UX Redesign** - Complete color palette and layout overhaul:
+- 2025-11-13: **Premium Apple HIG UI/UX Redesign** - Complete overhaul with Apple Human Interface Guidelines:
+  - **Feed Screen**: Premium cards (shadowRadius 12, padding 20px), circular mini app icons (54x54, borderRadius 27), larger avatars (56x56 with #FFD369 border), CTA buttons ("View Profile", "See Apps"), rounded pill search (borderRadius 28)
+  - **Notifications Screen**: Type-based icons (👤📱❤️🤝), dynamic color accents (#6C63FF follow, #FFD369 installed, #FF6B9D liked, #4ECDC4 friend), circular badges (48x48), dynamic unread borders, relative time ("2m ago"), premium "Mark All Read" button
+  - **Profile Screen**: Circular app icons (56x56, borderRadius 28), premium app cards with shadows and borders, enhanced section styling
+  - **React Native Compatibility**: Removed all `gap` properties, using marginRight/marginLeft for proper spacing
+- 2025-11-13: **Modern UI/UX Redesign** - Color palette and layout overhaul:
   - **Color Scheme**: Updated to modern palette (#6C63FF primary, #F0F2FF background, #FFD369 accent, #1A1A1A text)
   - **Profile Screen**: Compact header with avatar + stats side-by-side, follower counts formatted (1.2K style), #FFD369 avatar borders
   - **Package Names**: Hidden from Profile and Feed views (only show app names), kept in ManageApps for user clarity
   - **Consistent Styling**: All screens (Login, Register, Feed, Profile, Settings, Notifications, Search) updated with new palette
-- 2025-11-13: Major UI/UX improvements across all mobile screens:
-  - Login: Enlarged logo, added tagline, strengthened CTA, added input icons
-  - Register: Added icons, microcopy, password validation
-  - Feed: Displays user apps (4 visible + more), search/filter functionality
-  - Profile: Added Settings button
-  - Settings screens: Liked Profiles, Help, About
+- 2025-11-13: Major UI/UX improvements across all mobile screens
 - 2025-11-13: Backend: GET /api/profile/liked endpoint for retrieving liked profiles
 - 2025-11-11: Complete Appstalker MVP implementation finished
 - 2025-11-11: Backend API with all endpoints (auth, profile, apps, social, notifications)
