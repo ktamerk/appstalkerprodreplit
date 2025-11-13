@@ -189,30 +189,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             flex-shrink: 0;
+            overflow: hidden;
         }
         
-        .app-bubble.instagram {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            color: white;
-        }
-        
-        .app-bubble.spotify {
-            background: #1DB954;
-            color: white;
-        }
-        
-        .app-bubble.whatsapp {
-            background: #25D366;
-            color: white;
-        }
-        
-        .app-bubble.twitter {
-            background: #1DA1F2;
-            color: white;
+        .app-bubble img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         .app-bubble.more {
@@ -220,6 +205,7 @@
             border: 2px dashed #6C63FF;
             color: #6C63FF;
             font-size: 14px;
+            font-weight: bold;
         }
         
         .cta-buttons {
@@ -449,48 +435,16 @@
             width: 56px;
             height: 56px;
             border-radius: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 22px;
             margin-right: 14px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             flex-shrink: 0;
+            overflow: hidden;
         }
         
-        .app-icon.instagram {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-        }
-        
-        .app-icon.spotify {
-            background: #1DB954;
-        }
-        
-        .app-icon.whatsapp {
-            background: #25D366;
-        }
-        
-        .app-icon.twitter {
-            background: #1DA1F2;
-        }
-        
-        .app-icon.netflix {
-            background: #E50914;
-        }
-        
-        .app-icon.youtube {
-            background: #FF0000;
-        }
-        
-        .app-icon.tiktok {
-            background: linear-gradient(135deg, #00f2ea, #ff0050);
-        }
-        
-        .app-icon.snapchat {
-            background: #FFFC00;
-            color: #1A1A1A;
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         .app-name {
@@ -753,10 +707,18 @@
                             <div class="apps-section">
                                 <div class="apps-label">📱 12 apps</div>
                                 <div class="apps-bubbles">
-                                    <div class="app-bubble instagram">📷</div>
-                                    <div class="app-bubble spotify">🎵</div>
-                                    <div class="app-bubble whatsapp">💬</div>
-                                    <div class="app-bubble twitter">🐦</div>
+                                    <div class="app-bubble">
+                                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); padding: 12px;">
+                                    </div>
+                                    <div class="app-bubble">
+                                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/spotify.svg" alt="Spotify" style="background: #1DB954; padding: 12px;">
+                                    </div>
+                                    <div class="app-bubble">
+                                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp" style="background: #25D366; padding: 12px;">
+                                    </div>
+                                    <div class="app-bubble">
+                                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/twitter.svg" alt="Twitter" style="background: #1DA1F2; padding: 12px;">
+                                    </div>
                                     <div class="app-bubble more">+8</div>
                                 </div>
                             </div>
@@ -777,9 +739,15 @@
                             <div class="apps-section">
                                 <div class="apps-label">📱 8 apps</div>
                                 <div class="apps-bubbles">
-                                    <div class="app-bubble instagram">📷</div>
-                                    <div class="app-bubble netflix" style="background: #E50914;">🎬</div>
-                                    <div class="app-bubble youtube" style="background: #FF0000;">▶️</div>
+                                    <div class="app-bubble">
+                                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); padding: 12px;">
+                                    </div>
+                                    <div class="app-bubble">
+                                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/netflix.svg" alt="Netflix" style="background: #E50914; padding: 12px;">
+                                    </div>
+                                    <div class="app-bubble">
+                                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/youtube.svg" alt="YouTube" style="background: #FF0000; padding: 12px;">
+                                    </div>
                                     <div class="app-bubble more">+5</div>
                                 </div>
                             </div>
@@ -987,32 +955,44 @@
                         <div class="apps-section-title">Installed Apps</div>
                         
                         <div class="app-card">
-                            <div class="app-icon instagram">📷</div>
+                            <div class="app-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); padding: 14px;">
+                            </div>
                             <div class="app-name">Instagram</div>
                         </div>
                         
                         <div class="app-card">
-                            <div class="app-icon spotify">🎵</div>
+                            <div class="app-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/spotify.svg" alt="Spotify" style="background: #1DB954; padding: 14px;">
+                            </div>
                             <div class="app-name">Spotify</div>
                         </div>
                         
                         <div class="app-card">
-                            <div class="app-icon whatsapp">💬</div>
+                            <div class="app-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp" style="background: #25D366; padding: 14px;">
+                            </div>
                             <div class="app-name">WhatsApp</div>
                         </div>
                         
                         <div class="app-card">
-                            <div class="app-icon twitter">🐦</div>
+                            <div class="app-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/twitter.svg" alt="Twitter" style="background: #1DA1F2; padding: 14px;">
+                            </div>
                             <div class="app-name">Twitter</div>
                         </div>
                         
                         <div class="app-card">
-                            <div class="app-icon netflix">🎬</div>
+                            <div class="app-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/netflix.svg" alt="Netflix" style="background: #E50914; padding: 14px;">
+                            </div>
                             <div class="app-name">Netflix</div>
                         </div>
                         
                         <div class="app-card">
-                            <div class="app-icon youtube">▶️</div>
+                            <div class="app-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/youtube.svg" alt="YouTube" style="background: #FF0000; padding: 14px;">
+                            </div>
                             <div class="app-name">YouTube</div>
                         </div>
                     </div>
@@ -1154,7 +1134,9 @@
                         </div>
                         
                         <div class="app-card">
-                            <div class="app-icon instagram">📷</div>
+                            <div class="app-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); padding: 14px;">
+                            </div>
                             <div class="app-name">Instagram</div>
                             <div style="width: 50px; height: 30px; background: #6C63FF; border-radius: 15px; margin-left: auto; position: relative;">
                                 <div style="width: 26px; height: 26px; background: white; border-radius: 13px; position: absolute; right: 2px; top: 2px;"></div>
@@ -1162,7 +1144,9 @@
                         </div>
                         
                         <div class="app-card">
-                            <div class="app-icon spotify">🎵</div>
+                            <div class="app-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/spotify.svg" alt="Spotify" style="background: #1DB954; padding: 14px;">
+                            </div>
                             <div class="app-name">Spotify</div>
                             <div style="width: 50px; height: 30px; background: #6C63FF; border-radius: 15px; margin-left: auto; position: relative;">
                                 <div style="width: 26px; height: 26px; background: white; border-radius: 13px; position: absolute; right: 2px; top: 2px;"></div>
@@ -1170,7 +1154,9 @@
                         </div>
                         
                         <div class="app-card">
-                            <div class="app-icon whatsapp">💬</div>
+                            <div class="app-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp" style="background: #25D366; padding: 14px;">
+                            </div>
                             <div class="app-name">WhatsApp</div>
                             <div style="width: 50px; height: 30px; background: #ddd; border-radius: 15px; margin-left: auto; position: relative;">
                                 <div style="width: 26px; height: 26px; background: white; border-radius: 13px; position: absolute; left: 2px; top: 2px;"></div>
@@ -1178,7 +1164,9 @@
                         </div>
                         
                         <div class="app-card">
-                            <div class="app-icon twitter">🐦</div>
+                            <div class="app-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/twitter.svg" alt="Twitter" style="background: #1DA1F2; padding: 14px;">
+                            </div>
                             <div class="app-name">Twitter</div>
                             <div style="width: 50px; height: 30px; background: #6C63FF; border-radius: 15px; margin-left: auto; position: relative;">
                                 <div style="width: 26px; height: 26px; background: white; border-radius: 13px; position: absolute; right: 2px; top: 2px;"></div>
@@ -1205,27 +1193,27 @@
         </div>
         
         <div style="text-align: center; color: white; margin-top: 60px; opacity: 0.9;">
-            <h3 style="font-size: 24px; margin-bottom: 16px;">✨ Tüm 9 Mobil Ekran</h3>
+            <h3 style="font-size: 24px; margin-bottom: 16px;">✨ Tüm 9 Mobil Ekran - Gerçek Logolarla</h3>
             <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; max-width: 900px; margin: 20px auto;">
                 <div style="background: rgba(255,255,255,0.1); padding: 16px 24px; border-radius: 12px;">
                     <div style="font-size: 32px; margin-bottom: 8px;">⭕</div>
-                    <div style="font-weight: 600;">Circular App Icons</div>
-                    <div style="font-size: 14px; opacity: 0.9;">54x54 & 56x56 perfect circles</div>
+                    <div style="font-weight: 600;">Gerçek App Logoları</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Instagram, Spotify, WhatsApp, Netflix...</div>
                 </div>
                 <div style="background: rgba(255,255,255,0.1); padding: 16px 24px; border-radius: 12px;">
                     <div style="font-size: 32px; margin-bottom: 8px;">🎨</div>
-                    <div style="font-weight: 600;">Real App Colors</div>
-                    <div style="font-size: 14px; opacity: 0.9;">Instagram, Spotify, WhatsApp gradients</div>
+                    <div style="font-weight: 600;">Orijinal Renk Şemaları</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Her app kendi brand colors ile</div>
                 </div>
                 <div style="background: rgba(255,255,255,0.1); padding: 16px 24px; border-radius: 12px;">
                     <div style="font-size: 32px; margin-bottom: 8px;">📱</div>
                     <div style="font-weight: 600;">Apple Tab Bar</div>
-                    <div style="font-size: 14px; opacity: 0.9;">Icon-only navigation, no labels</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Icon-only navigation, glassmorphism</div>
                 </div>
                 <div style="background: rgba(255,255,255,0.1); padding: 16px 24px; border-radius: 12px;">
                     <div style="font-size: 32px; margin-bottom: 8px;">✨</div>
-                    <div style="font-weight: 600;">Premium Shadows</div>
-                    <div style="font-size: 14px; opacity: 0.9;">Enhanced depth & hierarchy</div>
+                    <div style="font-weight: 600;">Circular Perfect Icons</div>
+                    <div style="font-size: 14px; opacity: 0.9;">54x54 & 56x56 with shadows</div>
                 </div>
             </div>
             <p style="margin-top: 30px; font-size: 14px;">
