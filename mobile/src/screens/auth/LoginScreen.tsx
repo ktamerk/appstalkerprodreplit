@@ -36,37 +36,53 @@ export default function LoginScreen({ navigation, onLogin }: LoginScreenProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Appstalker</Text>
-      <Text style={styles.subtitle}>Share your apps with the world</Text>
+      <View style={styles.logoContainer}>
+        <Text style={styles.logo}>📱</Text>
+        <Text style={styles.title}>Appstalker</Text>
+        <Text style={styles.tagline}>Discover what apps people use.</Text>
+        <Text style={styles.taglineSecondary}>Find your digital tribe.</Text>
+      </View>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-      />
+      <View style={styles.formContainer}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputIcon}>✉️</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Email address"
+            placeholderTextColor="#999"
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            keyboardType="email-address"
+          />
+        </View>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputIcon}>🔒</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            placeholderTextColor="#999"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+          />
+        </View>
 
-      <TouchableOpacity
-        style={[styles.button, loading && styles.buttonDisabled]}
-        onPress={handleLogin}
-        disabled={loading}
-      >
-        <Text style={styles.buttonText}>{loading ? 'Logging in...' : 'Login'}</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, loading && styles.buttonDisabled]}
+          onPress={handleLogin}
+          disabled={loading}
+        >
+          <Text style={styles.buttonText}>
+            {loading ? 'Signing in...' : 'Sign In'}
+          </Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-        <Text style={styles.linkText}>Don't have an account? Register</Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <Text style={styles.linkText}>Don't have an account? <Text style={styles.linkBold}>Sign Up</Text></Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -74,50 +90,91 @@ export default function LoginScreen({ navigation, onLogin }: LoginScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    padding: 20,
     backgroundColor: '#fff',
   },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 10,
-    color: '#333',
+  logoContainer: {
+    flex: 0.4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 60,
   },
-  subtitle: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 40,
+  logo: {
+    fontSize: 72,
+    marginBottom: 10,
+  },
+  title: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 12,
+  },
+  tagline: {
+    fontSize: 18,
     color: '#666',
+    textAlign: 'center',
+    marginTop: 8,
+  },
+  taglineSecondary: {
+    fontSize: 16,
+    color: '#a8b5ff',
+    fontWeight: '600',
+    marginTop: 4,
+  },
+  formContainer: {
+    flex: 0.6,
+    padding: 30,
+    justifyContent: 'center',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1.5,
+    borderColor: '#e0e0e0',
+    borderRadius: 12,
+    marginBottom: 16,
+    paddingHorizontal: 15,
+    backgroundColor: '#f9f9f9',
+  },
+  inputIcon: {
+    fontSize: 20,
+    marginRight: 10,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    padding: 15,
-    marginBottom: 15,
+    flex: 1,
+    padding: 16,
     fontSize: 16,
+    color: '#333',
   },
   button: {
     backgroundColor: '#a8b5ff',
-    borderRadius: 8,
-    padding: 15,
+    borderRadius: 12,
+    padding: 18,
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 20,
+    shadowColor: '#a8b5ff',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
   },
   buttonDisabled: {
-    backgroundColor: '#999',
+    backgroundColor: '#ccc',
+    shadowOpacity: 0,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
+    letterSpacing: 0.5,
   },
   linkText: {
-    color: '#a8b5ff',
+    color: '#666',
     textAlign: 'center',
-    marginTop: 20,
-    fontSize: 14,
+    marginTop: 24,
+    fontSize: 15,
+  },
+  linkBold: {
+    color: '#a8b5ff',
+    fontWeight: 'bold',
   },
 });

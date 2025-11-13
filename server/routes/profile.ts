@@ -180,4 +180,29 @@ router.get('/search/:query', authenticateToken, async (req: AuthRequest, res) =>
   }
 });
 
+router.get('/liked', authenticateToken, async (req: AuthRequest, res) => {
+  try {
+    const userId = req.userId!;
+
+    const likedProfiles = await db.select({
+      id: profiles.id,
+      userId: users.id,
+      username: users.username,
+      displayName: profiles.displayName,
+      avatarUrl: profiles.avatarUrl,
+      bio: profiles.bio,
+    })
+      .from(likes)
+      .innerJoin(profiles, eq(likes.profileId, profiles.id))
+      .innerJoin(users, eq(profiles.userId, users.id))
+      .where(eq(likes.userId, userId))
+      .orderBy(likes.createdAt);
+
+    res.json({ profiles: likedProfiles });
+  } catch (error) {
+    console.error('Get liked profiles error:', error);
+    res.status(500).json({ error: 'Failed to get liked profiles' });
+  }
+});
+
 export default router;

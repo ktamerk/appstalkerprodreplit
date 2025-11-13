@@ -97,20 +97,28 @@ export default function ProfileScreen({ route, navigation }: any) {
         </View>
 
         {!username && (
-          <View style={styles.buttonContainer}>
+          <>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[styles.editButton, styles.editButtonHalf]}
+                onPress={() => navigation.navigate('EditProfile')}
+              >
+                <Text style={styles.editButtonText}>Edit Profile</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.editButton, styles.editButtonHalf]}
+                onPress={() => navigation.navigate('ManageApps')}
+              >
+                <Text style={styles.editButtonText}>Manage Apps</Text>
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity
-              style={[styles.editButton, styles.editButtonHalf]}
-              onPress={() => navigation.navigate('EditProfile')}
+              style={styles.settingsButton}
+              onPress={() => navigation.navigate('Settings')}
             >
-              <Text style={styles.editButtonText}>Edit Profile</Text>
+              <Text style={styles.settingsButtonText}>⚙️ Settings</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.editButton, styles.editButtonHalf]}
-              onPress={() => navigation.navigate('ManageApps')}
-            >
-              <Text style={styles.editButtonText}>Manage Apps</Text>
-            </TouchableOpacity>
-          </View>
+          </>
         )}
       </View>
 
@@ -221,6 +229,19 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     fontWeight: 'bold',
+  },
+  settingsButton: {
+    backgroundColor: '#f0f0f0',
+    borderRadius: 8,
+    padding: 12,
+    alignItems: 'center',
+    marginTop: 10,
+    marginHorizontal: 20,
+  },
+  settingsButtonText: {
+    color: '#666',
+    fontSize: 14,
+    fontWeight: '600',
   },
   section: {
     backgroundColor: '#fff',

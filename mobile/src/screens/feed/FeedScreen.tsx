@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, RefreshControl } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, RefreshControl, TextInput, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../services/api';
 import { API_ENDPOINTS } from '../../config/api';
@@ -16,10 +16,12 @@ interface NewApp {
 
 export default function FeedScreen({ navigation }: any) {
   const [following, setFollowing] = useState([]);
+  const [filteredFollowing, setFilteredFollowing] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [newApps, setNewApps] = useState<NewApp[]>([]);
   const [showNewAppPrompt, setShowNewAppPrompt] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     loadFeed();
@@ -29,13 +31,56 @@ export default function FeedScreen({ navigation }: any) {
   const loadFeed = async () => {
     try {
       const response = await api.get(API_ENDPOINTS.SOCIAL.FOLLOWING);
-      setFollowing(response.data.following);
+      const followingUsers = response.data.following;
+      
+      const usersWithApps = await Promise.all(
+        followingUsers.map(async (user: any) => {
+          try {
+            const profileResponse = await api.get(API_ENDPOINTS.PROFILE.USER(user.username));
+            return {
+              ...user,
+              apps: profileResponse.data.apps || [],
+              avatarUrl: profileResponse.data.profile?.avatarUrl,
+            };
+          } catch (error: any) {
+            if (error.response?.status === 403) {
+              return {
+                ...user,
+                apps: [],
+                isPrivate: true,
+              };
+            }
+            return {
+              ...user,
+              apps: [],
+            };
+          }
+        })
+      );
+      
+      setFollowing(usersWithApps);
+      setFilteredFollowing(usersWithApps);
     } catch (error) {
       console.error('Load feed error:', error);
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
+  };
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    if (!query.trim()) {
+      setFilteredFollowing(following);
+      return;
+    }
+    
+    const filtered = following.filter((user: any) => 
+      user.displayName.toLowerCase().includes(query.toLowerCase()) ||
+      user.username.toLowerCase().includes(query.toLowerCase()) ||
+      user.apps.some((app: any) => app.appName.toLowerCase().includes(query.toLowerCase()))
+    );
+    setFilteredFollowing(filtered);
   };
 
   const onRefresh = () => {
@@ -105,13 +150,49 @@ export default function FeedScreen({ navigation }: any) {
       style={styles.userCard}
       onPress={() => navigation.navigate('Profile', { username: item.username })}
     >
-      <View style={styles.avatar}>
-        <Text style={styles.avatarText}>{item.displayName[0].toUpperCase()}</Text>
+      <View style={styles.userHeader}>
+        {item.avatarUrl ? (
+          <Image source={{ uri: item.avatarUrl }} style={styles.avatarImage} />
+        ) : (
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>{item.displayName[0].toUpperCase()}</Text>
+          </View>
+        )}
+        <View style={styles.userInfo}>
+          <Text style={styles.displayName}>{item.displayName}</Text>
+          <Text style={styles.username}>@{item.username}</Text>
+        </View>
       </View>
-      <View style={styles.userInfo}>
-        <Text style={styles.displayName}>{item.displayName}</Text>
-        <Text style={styles.username}>@{item.username}</Text>
-      </View>
+      
+      {item.apps && item.apps.length > 0 && (
+        <View style={styles.appsContainer}>
+          <Text style={styles.appsLabel}>📱 {item.apps.length} apps installed</Text>
+          <View style={styles.appsList}>
+            {item.apps.slice(0, 4).map((app: any, index: number) => (
+              <View key={app.id || index} style={styles.miniApp}>
+                {app.appIcon ? (
+                  <Image source={{ uri: app.appIcon }} style={styles.miniAppIcon} />
+                ) : (
+                  <View style={styles.miniAppIconPlaceholder}>
+                    <Text style={styles.miniAppIconText}>{app.appName[0]}</Text>
+                  </View>
+                )}
+                <Text style={styles.miniAppName} numberOfLines={1}>
+                  {app.appName}
+                </Text>
+              </View>
+            ))}
+            {item.apps.length > 4 && (
+              <View style={styles.miniApp}>
+                <View style={styles.moreApps}>
+                  <Text style={styles.moreAppsText}>+{item.apps.length - 4}</Text>
+                </View>
+                <Text style={styles.miniAppName}>more</Text>
+              </View>
+            )}
+          </View>
+        </View>
+      )}
     </TouchableOpacity>
   );
 
@@ -125,8 +206,24 @@ export default function FeedScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.searchContainer}>
+        <Text style={styles.searchIcon}>🔍</Text>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search people or apps..."
+          placeholderTextColor="#999"
+          value={searchQuery}
+          onChangeText={handleSearch}
+        />
+        {searchQuery.length > 0 && (
+          <TouchableOpacity onPress={() => handleSearch('')}>
+            <Text style={styles.clearIcon}>✕</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+      
       <FlatList
-        data={following}
+        data={filteredFollowing}
         renderItem={renderUser}
         keyExtractor={(item: any) => item.id}
         refreshControl={
@@ -134,13 +231,21 @@ export default function FeedScreen({ navigation }: any) {
         }
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>You're not following anyone yet</Text>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('Search')}
-            >
-              <Text style={styles.buttonText}>Find People to Follow</Text>
-            </TouchableOpacity>
+            <Text style={styles.emptyIcon}>👥</Text>
+            <Text style={styles.emptyText}>
+              {searchQuery ? 'No results found' : "You're not following anyone yet"}
+            </Text>
+            <Text style={styles.emptySubtext}>
+              {searchQuery ? 'Try a different search' : 'Discover people and see what apps they use'}
+            </Text>
+            {!searchQuery && (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Search')}
+              >
+                <Text style={styles.buttonText}>Discover People</Text>
+              </TouchableOpacity>
+            )}
           </View>
         }
       />
@@ -165,23 +270,61 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  userCard: {
+  searchContainer: {
     flexDirection: 'row',
-    padding: 15,
-    backgroundColor: '#fff',
-    marginVertical: 4,
-    marginHorizontal: 8,
-    borderRadius: 8,
     alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+  },
+  searchIcon: {
+    fontSize: 18,
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    color: '#333',
+    padding: 0,
+  },
+  clearIcon: {
+    fontSize: 20,
+    color: '#999',
+    padding: 5,
+  },
+  userCard: {
+    padding: 16,
+    backgroundColor: '#fff',
+    marginVertical: 6,
+    marginHorizontal: 10,
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  userHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
   },
   avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     backgroundColor: '#a8b5ff',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 15,
+    marginRight: 12,
+  },
+  avatarImage: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    marginRight: 12,
   },
   avatarText: {
     color: '#fff',
@@ -192,30 +335,105 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   displayName: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: 'bold',
     color: '#333',
+    marginBottom: 2,
   },
   username: {
     fontSize: 14,
     color: '#666',
-    marginTop: 2,
+  },
+  appsContainer: {
+    borderTopWidth: 1,
+    borderTopColor: '#f0f0f0',
+    paddingTop: 12,
+  },
+  appsLabel: {
+    fontSize: 13,
+    color: '#666',
+    marginBottom: 10,
+    fontWeight: '500',
+  },
+  appsList: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  miniApp: {
+    alignItems: 'center',
+    width: 64,
+  },
+  miniAppIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 10,
+    marginBottom: 4,
+  },
+  miniAppIconPlaceholder: {
+    width: 48,
+    height: 48,
+    borderRadius: 10,
+    backgroundColor: '#d4a5f5',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  miniAppIconText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  miniAppName: {
+    fontSize: 11,
+    color: '#666',
+    textAlign: 'center',
+  },
+  moreApps: {
+    width: 48,
+    height: 48,
+    borderRadius: 10,
+    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  moreAppsText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#666',
   },
   emptyContainer: {
-    padding: 40,
+    padding: 60,
     alignItems: 'center',
   },
+  emptyIcon: {
+    fontSize: 64,
+    marginBottom: 16,
+  },
   emptyText: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 20,
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  emptySubtext: {
+    fontSize: 14,
+    color: '#999',
+    marginBottom: 24,
     textAlign: 'center',
   },
   button: {
     backgroundColor: '#a8b5ff',
-    borderRadius: 8,
-    padding: 15,
-    paddingHorizontal: 30,
+    borderRadius: 12,
+    padding: 16,
+    paddingHorizontal: 32,
+    shadowColor: '#a8b5ff',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
   },
   buttonText: {
     color: '#fff',

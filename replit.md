@@ -34,6 +34,13 @@ Appstalker is a cross-platform mobile social networking application that allows 
 - Notifications: real-time notifications for app installations and social actions
 
 ## Recent Changes
+- 2025-11-13: Major UI/UX improvements across all mobile screens:
+  - Login: Enlarged logo, added tagline, strengthened CTA, added input icons
+  - Register: Added icons, microcopy, password validation
+  - Feed: Displays user apps (4 visible + more), search/filter functionality
+  - Profile: Added Settings button
+  - Settings screens: Liked Profiles, Help, About
+- 2025-11-13: Backend: GET /api/profile/liked endpoint for retrieving liked profiles
 - 2025-11-11: Complete Appstalker MVP implementation finished
 - 2025-11-11: Backend API with all endpoints (auth, profile, apps, social, notifications)
 - 2025-11-11: Database schema created and pushed to PostgreSQL

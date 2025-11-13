@@ -13,6 +13,7 @@ export const API_ENDPOINTS = {
     USER: (username: string) => `/api/profile/${username}`,
     UPDATE: '/api/profile/me',
     SEARCH: (query: string) => `/api/profile/search/${query}`,
+    LIKED: '/api/profile/liked',
   },
   APPS: {
     SYNC: '/api/apps/sync',

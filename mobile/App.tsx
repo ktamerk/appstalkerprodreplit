@@ -12,6 +12,10 @@ import EditProfileScreen from './src/screens/profile/EditProfileScreen';
 import SearchScreen from './src/screens/search/SearchScreen';
 import NotificationsScreen from './src/screens/notifications/NotificationsScreen';
 import ManageAppsScreen from './src/screens/apps/ManageAppsScreen';
+import SettingsScreen from './src/screens/settings/SettingsScreen';
+import LikedProfilesScreen from './src/screens/settings/LikedProfilesScreen';
+import HelpScreen from './src/screens/settings/HelpScreen';
+import AboutScreen from './src/screens/settings/AboutScreen';
 import { initWebSocket, disconnectWebSocket } from './src/services/websocket';
 
 const Stack = createNativeStackNavigator();
@@ -85,6 +89,12 @@ export default function App() {
             />
             <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ title: 'Edit Profile' }} />
             <Stack.Screen name="ManageApps" component={ManageAppsScreen} options={{ title: 'Manage Apps' }} />
+            <Stack.Screen name="Settings">
+              {(props) => <SettingsScreen {...props} onLogout={handleLogout} />}
+            </Stack.Screen>
+            <Stack.Screen name="LikedProfiles" component={LikedProfilesScreen} options={{ title: 'Liked Profiles' }} />
+            <Stack.Screen name="Help" component={HelpScreen} options={{ title: 'Help & Support' }} />
+            <Stack.Screen name="About" component={AboutScreen} options={{ title: 'About Appstalker' }} />
           </>
         )}
       </Stack.Navigator>
