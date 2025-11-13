@@ -146,11 +146,11 @@ export default function FeedScreen({ navigation }: any) {
   };
 
   const renderUser = ({ item }: any) => (
-    <TouchableOpacity
-      style={styles.userCard}
-      onPress={() => navigation.navigate('Profile', { username: item.username })}
-    >
-      <View style={styles.userHeader}>
+    <View style={styles.userCard}>
+      <TouchableOpacity
+        style={styles.userHeader}
+        onPress={() => navigation.navigate('Profile', { username: item.username })}
+      >
         {item.avatarUrl ? (
           <Image source={{ uri: item.avatarUrl }} style={styles.avatarImage} />
         ) : (
@@ -162,38 +162,63 @@ export default function FeedScreen({ navigation }: any) {
           <Text style={styles.displayName}>{item.displayName}</Text>
           <Text style={styles.username}>@{item.username}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
       
       {item.apps && item.apps.length > 0 && (
-        <View style={styles.appsContainer}>
-          <Text style={styles.appsLabel}>📱 {item.apps.length} apps installed</Text>
-          <View style={styles.appsList}>
-            {item.apps.slice(0, 4).map((app: any, index: number) => (
-              <View key={app.id || index} style={styles.miniApp}>
-                {app.appIcon ? (
-                  <Image source={{ uri: app.appIcon }} style={styles.miniAppIcon} />
-                ) : (
-                  <View style={styles.miniAppIconPlaceholder}>
-                    <Text style={styles.miniAppIconText}>{app.appName[0]}</Text>
-                  </View>
-                )}
-                <Text style={styles.miniAppName} numberOfLines={1}>
-                  {app.appName}
-                </Text>
-              </View>
-            ))}
-            {item.apps.length > 4 && (
-              <View style={styles.miniApp}>
-                <View style={styles.moreApps}>
-                  <Text style={styles.moreAppsText}>+{item.apps.length - 4}</Text>
+        <>
+          <View style={styles.appsContainer}>
+            <Text style={styles.appsLabel}>📱 {item.apps.length} apps</Text>
+            <View style={styles.appsList}>
+              {item.apps.slice(0, 4).map((app: any, index: number) => (
+                <View key={app.id || index} style={styles.miniAppBubble}>
+                  {app.appIcon ? (
+                    <Image source={{ uri: app.appIcon }} style={styles.miniAppIcon} />
+                  ) : (
+                    <View style={styles.miniAppIconPlaceholder}>
+                      <Text style={styles.miniAppIconText}>{app.appName[0]}</Text>
+                    </View>
+                  )}
                 </View>
-                <Text style={styles.miniAppName}>more</Text>
-              </View>
-            )}
+              ))}
+              {item.apps.length > 4 && (
+                <View style={styles.miniAppBubble}>
+                  <View style={styles.moreAppsCircle}>
+                    <Text style={styles.moreAppsText}>+{item.apps.length - 4}</Text>
+                  </View>
+                </View>
+              )}
+            </View>
           </View>
+          
+          <View style={styles.ctaButtons}>
+            <TouchableOpacity
+              style={styles.ctaButtonSecondary}
+              onPress={() => navigation.navigate('Profile', { username: item.username })}
+            >
+              <Text style={styles.ctaTextSecondary}>View Profile</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.ctaButtonPrimary}
+              onPress={() => navigation.navigate('Profile', { username: item.username })}
+            >
+              <Text style={styles.ctaTextPrimary}>See Apps</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
+      
+      {(!item.apps || item.apps.length === 0) && (
+        <View style={styles.emptyAppsContainer}>
+          <Text style={styles.emptyAppsText}>No apps shared yet</Text>
+          <TouchableOpacity
+            style={styles.ctaButtonSecondary}
+            onPress={() => navigation.navigate('Profile', { username: item.username })}
+          >
+            <Text style={styles.ctaTextSecondary}>View Profile</Text>
+          </TouchableOpacity>
         </View>
       )}
-    </TouchableOpacity>
+    </View>
   );
 
   if (loading) {
@@ -274,10 +299,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    marginHorizontal: 16,
+    marginTop: 16,
+    marginBottom: 12,
+    borderRadius: 28,
+    shadowColor: '#6C63FF',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    elevation: 3,
   },
   searchIcon: {
     fontSize: 18,
@@ -295,16 +327,16 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   userCard: {
-    padding: 16,
+    padding: 20,
     backgroundColor: '#fff',
-    marginVertical: 6,
-    marginHorizontal: 10,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 16,
+    shadowColor: '#6C63FF',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 6,
   },
   userHeader: {
     flexDirection: 'row',
@@ -312,23 +344,27 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   avatar: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
     backgroundColor: '#6C63FF',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+    marginRight: 14,
+    borderWidth: 2,
+    borderColor: '#FFD369',
   },
   avatarImage: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    marginRight: 12,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    marginRight: 14,
+    borderWidth: 2,
+    borderColor: '#FFD369',
   },
   avatarText: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   userInfo: {
@@ -347,61 +383,113 @@ const styles = StyleSheet.create({
   appsContainer: {
     borderTopWidth: 1,
     borderTopColor: '#f0f0f0',
-    paddingTop: 12,
+    paddingTop: 14,
+    marginTop: 4,
   },
   appsLabel: {
     fontSize: 13,
     color: '#666',
-    marginBottom: 10,
-    fontWeight: '500',
+    marginBottom: 12,
+    fontWeight: '600',
   },
   appsList: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
   },
-  miniApp: {
+  miniAppBubble: {
     alignItems: 'center',
-    width: 64,
+    marginRight: 12,
   },
   miniAppIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 10,
-    marginBottom: 4,
+    width: 54,
+    height: 54,
+    borderRadius: 27,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   miniAppIconPlaceholder: {
-    width: 48,
-    height: 48,
-    borderRadius: 10,
+    width: 54,
+    height: 54,
+    borderRadius: 27,
     backgroundColor: '#6C63FF',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 4,
+    shadowColor: '#6C63FF',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
   },
   miniAppIconText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
   },
-  miniAppName: {
-    fontSize: 11,
-    color: '#666',
-    textAlign: 'center',
-  },
-  moreApps: {
-    width: 48,
-    height: 48,
-    borderRadius: 10,
-    backgroundColor: '#f0f0f0',
+  moreAppsCircle: {
+    width: 54,
+    height: 54,
+    borderRadius: 27,
+    backgroundColor: '#F0F2FF',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 4,
+    borderWidth: 2,
+    borderColor: '#6C63FF',
+    borderStyle: 'dashed',
   },
   moreAppsText: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#666',
+    color: '#6C63FF',
+  },
+  ctaButtons: {
+    flexDirection: 'row',
+    marginTop: 14,
+  },
+  ctaButtonPrimary: {
+    flex: 1,
+    backgroundColor: '#6C63FF',
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+    shadowColor: '#6C63FF',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 4,
+    marginLeft: 5,
+  },
+  ctaButtonSecondary: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+    borderWidth: 1.5,
+    borderColor: '#6C63FF',
+    marginRight: 5,
+  },
+  ctaTextPrimary: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  ctaTextSecondary: {
+    color: '#6C63FF',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  emptyAppsContainer: {
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#f0f0f0',
+    alignItems: 'center',
+  },
+  emptyAppsText: {
+    fontSize: 14,
+    color: '#999',
+    marginBottom: 12,
   },
   emptyContainer: {
     padding: 60,

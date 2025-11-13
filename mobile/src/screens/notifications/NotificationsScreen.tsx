@@ -53,37 +53,74 @@ export default function NotificationsScreen({ navigation }: any) {
     }
   };
 
-  const renderNotification = ({ item }: any) => (
-    <TouchableOpacity
-      style={[styles.notificationCard, !item.isRead && styles.unread]}
-      onPress={() => {
-        markAsRead(item.id);
-        if (item.relatedUser) {
-          navigation.navigate('Profile', { username: item.relatedUser.username });
-        }
-      }}
-    >
-      {item.relatedUser && (
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>
-            {item.relatedUser.displayName[0].toUpperCase()}
+  const getNotificationIcon = (content: string) => {
+    if (content.includes('follow')) return '👤';
+    if (content.includes('installed')) return '📱';
+    if (content.includes('liked')) return '❤️';
+    if (content.includes('friend request')) return '🤝';
+    return '🔔';
+  };
+
+  const getNotificationColor = (content: string) => {
+    if (content.includes('follow')) return '#6C63FF';
+    if (content.includes('installed')) return '#FFD369';
+    if (content.includes('liked')) return '#FF6B9D';
+    if (content.includes('friend request')) return '#4ECDC4';
+    return '#999';
+  };
+
+  const formatRelativeTime = (date: string) => {
+    const now = new Date();
+    const then = new Date(date);
+    const seconds = Math.floor((now.getTime() - then.getTime()) / 1000);
+    
+    if (seconds < 60) return 'Just now';
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+    if (seconds < 604800) return `${Math.floor(seconds / 86400)}d ago`;
+    return then.toLocaleDateString();
+  };
+
+  const renderNotification = ({ item }: any) => {
+    const iconEmoji = getNotificationIcon(item.content);
+    const accentColor = getNotificationColor(item.content);
+    
+    return (
+      <TouchableOpacity
+        style={[
+          styles.notificationCard,
+          !item.isRead && styles.unread,
+          !item.isRead && { borderLeftColor: accentColor }
+        ]}
+        onPress={() => {
+          markAsRead(item.id);
+          if (item.relatedUser) {
+            navigation.navigate('Profile', { username: item.relatedUser.username });
+          }
+        }}
+      >
+        <View style={[styles.iconBadge, { backgroundColor: accentColor + '20' }]}>
+          <Text style={styles.iconEmoji}>{iconEmoji}</Text>
+        </View>
+        
+        <View style={styles.notificationContent}>
+          <Text style={styles.notificationText}>
+            <Text style={styles.username}>
+              {item.relatedUser?.displayName || 'Someone'}
+            </Text>{' '}
+            {item.content}
+          </Text>
+          <Text style={styles.time}>
+            {formatRelativeTime(item.createdAt)}
           </Text>
         </View>
-      )}
-      <View style={styles.notificationContent}>
-        <Text style={styles.notificationText}>
-          <Text style={styles.username}>
-            {item.relatedUser?.displayName || 'Someone'}
-          </Text>{' '}
-          {item.content}
-        </Text>
-        <Text style={styles.time}>
-          {new Date(item.createdAt).toLocaleDateString()}
-        </Text>
-      </View>
-      {!item.isRead && <View style={styles.unreadDot} />}
-    </TouchableOpacity>
-  );
+        
+        {!item.isRead && (
+          <View style={[styles.unreadDot, { backgroundColor: accentColor }]} />
+        )}
+      </TouchableOpacity>
+    );
+  };
 
   if (loading) {
     return (
@@ -96,9 +133,12 @@ export default function NotificationsScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       {notifications.length > 0 && (
-        <TouchableOpacity style={styles.markAllButton} onPress={markAllAsRead}>
-          <Text style={styles.markAllText}>Mark All as Read</Text>
-        </TouchableOpacity>
+        <View style={styles.headerContainer}>
+          <TouchableOpacity style={styles.markAllButton} onPress={markAllAsRead}>
+            <Text style={styles.markAllIcon}>✓</Text>
+            <Text style={styles.markAllText}>Mark All Read</Text>
+          </TouchableOpacity>
+        </View>
       )}
 
       <FlatList
@@ -128,43 +168,66 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  markAllButton: {
+  headerContainer: {
     backgroundColor: '#fff',
-    padding: 15,
-    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: '#f0f0f0',
+  },
+  markAllButton: {
+    flexDirection: 'row',
+    backgroundColor: '#6C63FF',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#6C63FF',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  markAllIcon: {
+    color: '#fff',
+    fontSize: 16,
+    marginRight: 6,
+    fontWeight: 'bold',
   },
   markAllText: {
-    color: '#6C63FF',
-    fontSize: 14,
+    color: '#fff',
+    fontSize: 15,
     fontWeight: '600',
   },
   notificationCard: {
     flexDirection: 'row',
-    padding: 15,
+    padding: 16,
     backgroundColor: '#fff',
-    marginVertical: 4,
-    marginHorizontal: 8,
-    borderRadius: 8,
+    marginVertical: 6,
+    marginHorizontal: 16,
+    borderRadius: 14,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    elevation: 2,
   },
   unread: {
-    backgroundColor: '#f0f8ff',
+    backgroundColor: '#F0F2FF',
+    borderLeftWidth: 4,
   },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#6C63FF',
+  iconBadge: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+    marginRight: 14,
   },
-  avatarText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
+  iconEmoji: {
+    fontSize: 24,
   },
   notificationContent: {
     flex: 1,
@@ -177,15 +240,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   time: {
-    fontSize: 12,
-    color: '#999',
-    marginTop: 4,
+    fontSize: 11,
+    color: '#bbb',
+    marginTop: 5,
+    fontWeight: '500',
   },
   unreadDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#6C63FF',
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginLeft: 8,
   },
   emptyContainer: {
     padding: 40,
